@@ -57,3 +57,5 @@ api/*.backup
 api/test.php
 api/test_firebase.php
 api/test_send_fcm.php
+# Local API archive
+/api.zip

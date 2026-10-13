@@ -1,0 +1,47 @@
+﻿# Secrets and local configuration
+.env
+.env.*
+**/.env
+**/.env.*
+
+# Git history and local tools
+.git/
+.gitignore
+.vscode/
+.idea/
+
+# Local archives and database backups
+*.zip
+*.dump
+*.sql
+*.bak
+*.backup
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Development-only endpoints
+api/test.php
+api/test_firebase.php
+api/test_send_fcm.php
+api/*backup*.php
+api/*_backup*.php
+
+# Local dependencies and generated files
+node_modules/
+api/reset_admin_password.php
+
+
+# Firebase credentials and private keys
+**/*firebase*credentials*.json
+**/*service-account*.json
+**/*serviceAccount*.json
+**/*.pem
+**/*.key
+
+# Local database exports
+**/*.sql
+**/*.dump
+
+vendor/

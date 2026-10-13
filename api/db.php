@@ -48,6 +48,7 @@ $port = getenv("DB_PORT") ?: "5432";
 $dbname = getenv("DB_NAME") ?: "kohicebu";
 $user = getenv("DB_USER") ?: "postgres";
 $password = getenv("DB_PASSWORD");
+$sslmode = getenv("DB_SSLMODE") ?: "disable";
 
 if ($password === false || $password === "") {
     error_log("KohiCebu database password is not configured.");
@@ -60,13 +61,32 @@ if ($password === false || $password === "") {
     exit;
 }
 
+if (!in_array($sslmode, ["disable", "require", "verify-ca", "verify-full", "prefer", "allow"], true)) {
+    error_log("KohiCebu database SSL mode is invalid.");
+    http_response_code(500);
+    echo json_encode([
+        "success" => false,
+        "message" => "Database configuration is incomplete."
+    ]);
+    exit;
+}
+
+$escapeConnValue = static function (string $value): string {
+    return "'" . str_replace(
+        ["\\", "'"],
+        ["\\\\", "\\'"],
+        $value
+    ) . "'";
+};
+
 $connString = sprintf(
-    "host=%s port=%s dbname=%s user=%s password=%s",
-    $host,
-    $port,
-    $dbname,
-    $user,
-    $password
+    "host=%s port=%s dbname=%s user=%s password=%s sslmode=%s",
+    $escapeConnValue($host),
+    $escapeConnValue($port),
+    $escapeConnValue($dbname),
+    $escapeConnValue($user),
+    $escapeConnValue($password),
+    $sslmode
 );
 
 $conn = pg_connect($connString);
