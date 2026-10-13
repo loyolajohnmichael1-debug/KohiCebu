@@ -138,6 +138,16 @@ const addIngredientError =
 const saveNewIngredient =
     document.getElementById("saveNewIngredient");
 
+const addInventoryUnitButton = document.getElementById("addInventoryUnitButton");
+const addInventoryUnitModal = document.getElementById("addInventoryUnitModal");
+const closeAddInventoryUnitModalButton = document.getElementById("closeAddInventoryUnitModal");
+const cancelAddInventoryUnit = document.getElementById("cancelAddInventoryUnit");
+const newUnitName = document.getElementById("newUnitName");
+const newUnitCode = document.getElementById("newUnitCode");
+const newUnitType = document.getElementById("newUnitType");
+const addInventoryUnitError = document.getElementById("addInventoryUnitError");
+const saveInventoryUnit = document.getElementById("saveInventoryUnit");
+
 
 /* =========================================================
    AUTH TOKEN
@@ -1838,6 +1848,63 @@ cancelAddIngredient.addEventListener(
 );
 
 
+function closeAddInventoryUnit() {
+    addInventoryUnitModal.hidden = true;
+}
+
+function openAddInventoryUnit() {
+    addInventoryUnitError.hidden = true;
+    newUnitName.value = "";
+    newUnitCode.value = "";
+    newUnitType.value = "";
+    addInventoryUnitModal.hidden = false;
+    newUnitName.focus();
+}
+
+addInventoryUnitButton.addEventListener("click", openAddInventoryUnit);
+closeAddInventoryUnitModalButton.addEventListener("click", closeAddInventoryUnit);
+cancelAddInventoryUnit.addEventListener("click", closeAddInventoryUnit);
+addInventoryUnitModal.addEventListener("click", event => {
+    if (event.target === addInventoryUnitModal) closeAddInventoryUnit();
+});
+
+saveInventoryUnit.addEventListener("click", async () => {
+    addInventoryUnitError.hidden = true;
+    const unitName = newUnitName.value.trim();
+    const unitCode = newUnitCode.value.trim().toUpperCase();
+    const unitType = newUnitType.value;
+
+    if (!unitName || !unitCode || !unitType) {
+        addInventoryUnitError.textContent = "Enter a name, code, and unit type.";
+        addInventoryUnitError.hidden = false;
+        return;
+    }
+
+    saveInventoryUnit.disabled = true;
+    saveInventoryUnit.textContent = "Saving...";
+    try {
+        const data = await apiRequest("add_inventory_unit.php", {
+            method: "POST",
+            body: JSON.stringify({ unit_name: unitName, unit_code: unitCode, unit_type: unitType })
+        });
+
+        closeAddInventoryUnit();
+        await loadInventoryUnits();
+        const createdUnitId = Number(data.unit?.unit_id ?? data.unit_id);
+        if (Number.isInteger(createdUnitId) && createdUnitId > 0) {
+            newIngredientUnit.value = String(createdUnitId);
+        }
+        systemStatus.textContent = data.message || "Inventory unit created successfully.";
+    }
+    catch (error) {
+        addInventoryUnitError.textContent = error.message || "Unable to create inventory unit.";
+        addInventoryUnitError.hidden = false;
+    }
+    finally {
+        saveInventoryUnit.disabled = false;
+        saveInventoryUnit.textContent = "Save Unit";
+    }
+});
 /* =========================================================
    CREATE NEW INGREDIENT
    ========================================================= */

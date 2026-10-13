@@ -1829,3 +1829,17 @@
     }
 
 }
+
+.inventory-unit-control {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+}
+.inventory-unit-control select {
+    flex: 1;
+    min-width: 0;
+}
+.inventory-add-unit-button {
+    flex-shrink: 0;
+    white-space: nowrap;
+}

@@ -608,15 +608,14 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     Unit
                 </label>
 
-                <select
-                    id="newIngredientUnit"
-                >
-
-                    <option value="">
-                        Select unit
-                    </option>
-
-                </select>
+                <div class="inventory-unit-control">
+                    <select id="newIngredientUnit">
+                        <option value="">Select unit</option>
+                    </select>
+                    <button type="button" class="secondary-button inventory-add-unit-button" id="addInventoryUnitButton">
+                        + Add Unit
+                    </button>
+                </div>
 
             </div>
 
@@ -673,6 +672,33 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 </div>
 
 
+<!-- ADD INVENTORY UNIT MODAL -->
+<div class="modal-overlay" id="addInventoryUnitModal" hidden>
+    <div class="inventory-modal">
+        <div class="modal-header">
+            <div><h2>Add Inventory Unit</h2><p>Configure a unit for ingredient stock tracking.</p></div>
+            <button type="button" class="modal-close" id="closeAddInventoryUnitModal" aria-label="Close">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group"><label for="newUnitName">Unit Name</label><input type="text" id="newUnitName" maxlength="50" placeholder="e.g. Grams"></div>
+            <div class="form-group"><label for="newUnitCode">Unit Code</label><input type="text" id="newUnitCode" maxlength="20" placeholder="e.g. g"></div>
+            <div class="form-group">
+                <label for="newUnitType">Unit Type</label>
+                <select id="newUnitType">
+                    <option value="">Select type</option>
+                    <option value="WEIGHT">Weight</option>
+                    <option value="VOLUME">Volume</option>
+                    <option value="COUNT">Count</option>
+                </select>
+            </div>
+            <div class="modal-error" id="addInventoryUnitError" hidden></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="secondary-button" id="cancelAddInventoryUnit">Cancel</button>
+            <button type="button" class="primary-button" id="saveInventoryUnit">Save Unit</button>
+        </div>
+    </div>
+</div>
 <script src="js/pagination.js"></script>
 <script src="js/inventory.js"></script>
 
