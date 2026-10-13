@@ -28,6 +28,7 @@ COPY . .
 COPY apache-kohicebu.conf /etc/apache2/conf-available/kohicebu.conf
 
 RUN a2enconf kohicebu \
+    && mkdir -p /var/www/html/uploads \
     && chown -R www-data:www-data /var/www/html/uploads
 
 EXPOSE 80
