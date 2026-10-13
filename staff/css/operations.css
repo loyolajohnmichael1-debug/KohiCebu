@@ -1,0 +1,218 @@
+/* Shared layout refinements for the dashboard, order queue, and payments. */
+
+.main {
+    padding: clamp(28px, 3.2vw, 46px) clamp(20px, 3.4vw, 48px) 60px;
+}
+
+.page-header {
+    align-items: flex-start;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line-soft);
+    margin-bottom: 28px;
+}
+
+.page-title {
+    font-size: clamp(28px, 3vw, 36px);
+    line-height: 1.08;
+}
+
+.page-subtitle {
+    max-width: 680px;
+}
+
+.header-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.stats-grid,
+.summary-grid {
+    align-items: stretch;
+    gap: 14px;
+    margin-bottom: 30px;
+}
+
+.stat-card,
+.summary-card {
+    min-width: 0;
+    min-height: 132px;
+    padding: 20px;
+    border-radius: 14px;
+}
+
+.section {
+    margin-bottom: 30px;
+}
+
+.section-header,
+.orders-section .section-header,
+.payments-section .section-header {
+    align-items: flex-end;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.queue-grid,
+.orders-grid {
+    align-items: stretch;
+    gap: 14px;
+}
+
+.queue-card,
+.order-card,
+.payment-card {
+    border-radius: 14px;
+}
+
+.queue-card {
+    min-width: 0;
+    padding: 20px;
+}
+
+.orders-section,
+.payments-section {
+    min-width: 0;
+}
+
+.filters-section {
+    margin-bottom: 20px;
+    padding: 7px;
+}
+
+.filter-tabs {
+    gap: 5px;
+}
+
+.filter-tab,
+.payment-filter {
+    white-space: nowrap;
+}
+
+.payment-filters {
+    flex-wrap: wrap;
+}
+
+.controls-section {
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+}
+
+.payment-search {
+    max-width: 360px;
+}
+
+.payment-list {
+    gap: 14px;
+}
+
+.payment-card-header {
+    align-items: flex-start;
+}
+
+.system-banner {
+    margin-top: 28px;
+}
+
+@media (max-width: 1180px) {
+    .queue-grid,
+    .orders-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .queue-grid,
+    .orders-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .controls-section {
+        align-items: stretch;
+    }
+
+    .payment-search {
+        max-width: none;
+    }
+}
+
+@media (max-width: 760px) {
+    .main {
+        padding: 28px 20px 42px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+        margin-bottom: 24px;
+    }
+
+    .header-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .stats-grid,
+    .summary-grid {
+        gap: 10px;
+        margin-bottom: 24px;
+    }
+
+    .queue-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .filter-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        padding-bottom: 3px;
+    }
+
+    .filter-tab {
+        flex: 0 0 auto;
+    }
+
+    .payment-filters {
+        display: flex;
+        width: 100%;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+    }
+
+    .payment-filter {
+        flex: 0 0 auto;
+    }
+}
+
+@media (max-width: 520px) {
+    .main {
+        padding: 24px 16px 36px;
+    }
+
+    .stats-grid,
+    .summary-grid,
+    .queue-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .stat-card,
+    .summary-card,
+    .queue-card {
+        min-height: 0;
+    }
+
+    .queue-card {
+        padding: 18px;
+    }
+
+    .section-header,
+    .orders-section .section-header,
+    .payments-section .section-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,59 @@
+﻿
+# Secrets and environment configuration
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Database credentials and local configuration
+*.bak
+*.backup
+
+# Firebase credentials and private service accounts
+firebase-adminsdk*.json
+service-account*.json
+*serviceAccount*.json
+
+# Dependencies and generated files
+node_modules/
+**/node_modules/
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Local IDE settings
+.vscode/
+.idea/
+
+# Composer dependencies
+/vendor/
+
+# Uploaded files — review before committing
+/uploads/*
+!/uploads/.gitkeep
+
+# Local database configuration and backups
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+*.bak
+*.backup
+
+# Historical API backups — do not publish
+api/*backup*.php
+api/*_backup*.php
+api/*.bak
+api/*.backup
+
+# Local testing endpoints — review before deployment
+api/test.php
+api/test_firebase.php
+api/test_send_fcm.php

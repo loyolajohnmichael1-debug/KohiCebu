@@ -1,0 +1,546 @@
+/* =========================================================
+   KOHI CEBU — CUSTOMER ACCOUNT
+   Dashboard / Admin / Staff Inspired
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   PAGE
+   --------------------------------------------------------- */
+
+.account-page {
+    min-height: calc(100vh - var(--header-height));
+
+    padding-top: var(--header-height);
+
+    background: #f7f7f6;
+
+    color: #111111;
+}
+
+
+/* ---------------------------------------------------------
+   ACCOUNT HEADER
+   --------------------------------------------------------- */
+
+.account-hero {
+    padding: 38px 0 26px;
+
+    background: #f7f7f6;
+
+    border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+.account-hero .container {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.account-hero .eyebrow {
+    margin-bottom: 8px;
+
+    color: #777777;
+
+    font-size: 0.65rem;
+    font-weight: 800;
+
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+}
+
+.account-hero h1 {
+    margin: 0;
+
+    color: #111111;
+
+    font-size: 2.1rem;
+    font-weight: 800;
+
+    line-height: 1.1;
+
+    letter-spacing: -0.045em;
+}
+
+.account-hero__text {
+    margin-top: 8px;
+
+    max-width: 650px;
+
+    color: #777777;
+
+    font-size: 0.82rem;
+
+    line-height: 1.6;
+}
+
+
+/* ---------------------------------------------------------
+   ACCOUNT SECTION
+   --------------------------------------------------------- */
+
+.account-section {
+    padding: 26px 0 60px;
+}
+
+.account-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.1fr)
+        minmax(300px, 0.9fr);
+
+    align-items: start;
+
+    gap: 18px;
+}
+
+
+/* ---------------------------------------------------------
+   PROFILE CARD
+   --------------------------------------------------------- */
+
+.account-card {
+    background: #ffffff;
+
+    border: 1px solid rgba(17, 17, 17, 0.10);
+
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+.account-card__header {
+    padding: 20px 22px;
+
+    border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+.account-card__header .eyebrow {
+    margin-bottom: 6px;
+
+    color: #777777;
+}
+
+.account-card__header h2 {
+    margin: 0;
+
+    color: #111111;
+
+    font-size: 1.05rem;
+
+    letter-spacing: -0.025em;
+}
+
+
+/* ---------------------------------------------------------
+   PROFILE
+   --------------------------------------------------------- */
+
+.account-profile {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 22px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+.account-profile__avatar {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 52px;
+    height: 52px;
+
+    flex: 0 0 52px;
+
+    background: #111111;
+
+    border-radius: 8px;
+
+    color: #ffffff;
+
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.account-profile__info {
+    min-width: 0;
+}
+
+.account-profile__info h3 {
+    margin: 0 0 3px;
+
+    color: #111111;
+
+    font-size: 0.95rem;
+
+    font-weight: 800;
+
+    letter-spacing: -0.015em;
+}
+
+.account-profile__info p {
+    overflow-wrap: anywhere;
+
+    color: #777777;
+
+    font-size: 0.75rem;
+}
+
+
+/* ---------------------------------------------------------
+   ACCOUNT DETAILS
+   --------------------------------------------------------- */
+
+.account-details {
+    display: grid;
+}
+
+.account-detail {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    padding: 15px 22px;
+
+    border-bottom: 1px solid rgba(17, 17, 17, 0.07);
+}
+
+.account-detail:last-child {
+    border-bottom: 0;
+}
+
+.account-detail span {
+    color: #777777;
+
+    font-size: 0.72rem;
+}
+
+.account-detail strong {
+    max-width: 60%;
+
+    color: #222222;
+
+    font-size: 0.76rem;
+    font-weight: 700;
+
+    text-align: right;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ---------------------------------------------------------
+   PROFILE BUTTON
+   --------------------------------------------------------- */
+
+.account-card__button {
+    width: auto;
+
+    min-height: 40px;
+
+    margin: 0 22px 22px;
+
+    padding: 0 17px;
+
+    border-radius: 6px;
+
+    font-size: 0.68rem;
+}
+
+
+/* ---------------------------------------------------------
+   ACCOUNT ACTIONS
+   --------------------------------------------------------- */
+
+.account-actions {
+    display: grid;
+
+    gap: 12px;
+}
+
+
+/* ---------------------------------------------------------
+   ACTION CARD
+   --------------------------------------------------------- */
+
+.account-action {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    min-height: 132px;
+
+    padding: 22px;
+
+    background: #ffffff;
+
+    border: 1px solid rgba(17, 17, 17, 0.10);
+
+    border-radius: 10px;
+
+    color: inherit;
+
+    text-decoration: none;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition),
+        transform var(--transition);
+}
+
+.account-action:hover {
+    border-color: rgba(17, 17, 17, 0.18);
+
+    box-shadow:
+        0 8px 24px rgba(17, 17, 17, 0.06);
+
+    transform: translateY(-1px);
+}
+
+.account-action__content {
+    min-width: 0;
+}
+
+.account-action .eyebrow {
+    margin-bottom: 6px;
+
+    color: #777777;
+
+    font-size: 0.62rem;
+}
+
+.account-action h2 {
+    margin: 0 0 6px;
+
+    color: #111111;
+
+    font-size: 1rem;
+
+    line-height: 1.2;
+
+    letter-spacing: -0.025em;
+}
+
+.account-action p:not(.eyebrow) {
+    max-width: 430px;
+
+    color: #777777;
+
+    font-size: 0.74rem;
+
+    line-height: 1.55;
+}
+
+.account-action__arrow {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;
+    height: 32px;
+
+    flex: 0 0 32px;
+
+    background: #f3f0e9;
+
+    border-radius: 6px;
+
+    color: #333333;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    transition:
+        background-color var(--transition),
+        transform var(--transition);
+}
+
+.account-action:hover .account-action__arrow {
+    background: #111111;
+
+    color: #ffffff;
+
+    transform: translateX(3px);
+}
+
+
+/* ---------------------------------------------------------
+   LOG OUT
+   --------------------------------------------------------- */
+
+.account-logout {
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-top: 18px;
+}
+
+.account-logout__link {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 38px;
+
+    padding: 0 15px;
+
+    border: 1px solid rgba(17, 17, 17, 0.12);
+
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    color: #555555;
+
+    font-size: 0.7rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        border-color var(--transition),
+        color var(--transition),
+        background-color var(--transition);
+}
+
+.account-logout form {
+    margin: 0;
+}
+
+.account-logout__link:hover {
+    border-color: #111111;
+
+    background: #111111;
+
+    color: #ffffff;
+}
+
+
+/* ---------------------------------------------------------
+   DESKTOP WIDTH
+   --------------------------------------------------------- */
+
+@media (min-width: 1100px) {
+
+    .account-section .container {
+        max-width: 1100px;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   TABLET
+   --------------------------------------------------------- */
+
+@media (max-width: 900px) {
+
+    .account-hero {
+        padding: 30px 0 22px;
+    }
+
+    .account-hero h1 {
+        font-size: 1.9rem;
+    }
+
+    .account-section {
+        padding: 22px 0 50px;
+    }
+
+    .account-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+    .account-hero {
+        padding: 24px 0 20px;
+    }
+
+    .account-hero h1 {
+        font-size: 1.65rem;
+    }
+
+    .account-hero__text {
+        font-size: 0.78rem;
+    }
+
+    .account-section {
+        padding: 18px 0 45px;
+    }
+
+    .account-profile {
+        padding: 18px;
+    }
+
+    .account-card__header {
+        padding: 17px 18px;
+    }
+
+    .account-detail {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 5px;
+
+        padding: 13px 18px;
+    }
+
+    .account-detail strong {
+        max-width: 100%;
+
+        text-align: left;
+    }
+
+    .account-card__button {
+        margin: 0 18px 18px;
+    }
+
+    .account-action {
+        min-height: 0;
+
+        padding: 18px;
+    }
+
+    .account-action__arrow {
+        width: 30px;
+        height: 30px;
+
+        flex-basis: 30px;
+    }
+
+    .account-logout {
+        justify-content: flex-start;
+    }
+
+}
+/* Unified application tokens */
+.account-page, .account-hero, .account-section { --app-bg:#f7f7f6; --surface:#fff; --line:rgba(17,17,17,.10); }

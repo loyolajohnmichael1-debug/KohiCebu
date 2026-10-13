@@ -1,0 +1,1147 @@
+/* =========================================================
+   KOHICEBU STAFF PORTAL
+   MY ACCOUNT — MODERN UI
+========================================================= */
+
+:root {
+    --ink: #111111;
+    --ink-soft: #1b1b1b;
+
+    --paper: #ffffff;
+    --plaster: #f5f5f3;
+    --plaster-dark: #eeeeeb;
+
+    --line: #deded9;
+    --line-soft: #e9e9e5;
+    --line-dark: #292929;
+
+    --mute: #858585;
+    --soft: #3f3f3f;
+
+    --accent: #d6a064;
+    --accent-soft: #f4eadf;
+
+    --success: #48634e;
+    --success-bg: #edf2ed;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+    --sidebar-width: 232px;
+
+    --shadow-sm:
+        0 1px 2px rgba(17, 17, 17, 0.035);
+
+    --shadow-md:
+        0 10px 30px rgba(17, 17, 17, 0.055);
+
+    --shadow-lg:
+        0 18px 45px rgba(17, 17, 17, 0.075);
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family: "Inter", sans-serif;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f7f7f5 0%,
+            var(--plaster) 45%,
+            #f3f3f0 100%
+        );
+
+    color: var(--ink);
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    border: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   APPLICATION
+========================================================= */
+
+.app {
+    min-height: 100vh;
+    display: flex;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: var(--sidebar-width);
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 28px 12px;
+
+    background: var(--ink);
+    color: var(--paper);
+
+    z-index: 100;
+
+    overflow-y: auto;
+
+    border-right: 1px solid #252525;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #343434;
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.brand {
+    padding: 16px 14px 30px;
+}
+
+.brand-name {
+    font-size: 23px;
+    font-weight: 800;
+
+    line-height: 1;
+
+    letter-spacing: -0.9px;
+}
+
+.brand-role {
+    margin-top: 8px;
+
+    color: var(--accent);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.6px;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.nav-label {
+    padding: 12px 14px 9px;
+
+    margin-bottom: 2px;
+
+    color: #858585;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.4px;
+}
+
+.nav-link {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    min-height: 43px;
+
+    padding: 10px 14px;
+
+    border: 1px solid transparent;
+    border-radius: 9px;
+
+    color: #d8d8d8;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.15s ease;
+}
+
+.nav-link:hover {
+    background: #202020;
+    color: #ffffff;
+}
+
+.nav-link:active {
+    transform: translateY(1px);
+}
+
+.nav-link.active {
+    background: #292929;
+
+    border-color: #eeeeee;
+
+    color: #ffffff;
+}
+
+.nav-icon {
+    width: 18px;
+    min-width: 18px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 14px;
+    line-height: 1;
+}
+
+
+/* =========================================================
+   STAFF PROFILE
+========================================================= */
+
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+.staff-profile {
+    padding: 26px 14px 0;
+
+    border-top: 1px solid #292929;
+}
+
+.staff-name {
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.staff-role {
+    margin-top: 5px;
+
+    color: var(--accent);
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.6px;
+}
+
+.sign-out {
+    width: 100%;
+
+    margin-top: 15px;
+
+    min-height: 46px;
+
+    padding: 10px 12px;
+
+    border: 1px solid #343434;
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: #d8d8d8;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.15s ease;
+}
+
+.sign-out:hover {
+    background: #202020;
+
+    border-color: #4a4a4a;
+
+    color: #ffffff;
+}
+
+.sign-out:active {
+    transform: translateY(1px);
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.main {
+    width: calc(100% - var(--sidebar-width));
+
+    min-height: 100vh;
+
+    margin-left: var(--sidebar-width);
+
+    padding: 42px 46px 60px;
+
+    position: relative;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-bottom: 34px;
+}
+
+.page-title {
+    color: var(--ink);
+
+    font-size: 34px;
+    font-weight: 750;
+
+    line-height: 1.08;
+
+    letter-spacing: -1.25px;
+}
+
+.page-subtitle {
+    max-width: 560px;
+
+    margin-top: 9px;
+
+    color: var(--mute);
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+.page-date {
+    padding-bottom: 3px;
+
+    color: #999995;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   PROFILE CARD
+========================================================= */
+
+.account-profile-card {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 28px;
+
+    min-height: 124px;
+
+    padding: 26px 28px;
+
+    margin-bottom: 36px;
+
+    overflow: hidden;
+
+    background: var(--paper);
+
+    border: 1px solid var(--line);
+
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+/*
+    Very subtle premium accent.
+    Keeps the coffee-shop identity without
+    turning the card into a decorative box.
+*/
+.account-profile-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--accent) 0%,
+            rgba(214, 160, 100, 0.28) 42%,
+            transparent 78%
+        );
+}
+
+.account-profile-card:hover {
+    border-color: #cecec9;
+
+    box-shadow: var(--shadow-md);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.account-profile {
+    display: flex;
+
+    align-items: center;
+
+    gap: 17px;
+
+    min-width: 0;
+}
+
+.account-avatar {
+    width: 64px;
+    min-width: 64px;
+
+    height: 64px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #181818,
+            #0f0f0f
+        );
+
+    color: var(--paper);
+
+    font-size: 21px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    letter-spacing: -0.4px;
+
+    box-shadow:
+        0 5px 14px rgba(17, 17, 17, 0.14);
+}
+
+.account-profile-info {
+    min-width: 0;
+}
+
+.account-profile-name {
+    color: var(--ink);
+
+    font-size: 21px;
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    letter-spacing: -0.45px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.account-profile-role {
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-top: 8px;
+
+    padding: 5px 9px;
+
+    border: 1px solid #e2e2de;
+
+    border-radius: 999px;
+
+    background: #f7f7f4;
+
+    color: var(--soft);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.9px;
+}
+
+
+/* =========================================================
+   ACCOUNT STATUS
+========================================================= */
+
+.account-status {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 12px;
+
+    border: 1px solid #d8e0d9;
+
+    border-radius: 999px;
+
+    background: var(--success-bg);
+
+    color: var(--success);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.75px;
+
+    white-space: nowrap;
+}
+
+.account-status-dot {
+    width: 7px;
+    min-width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--success);
+
+    box-shadow:
+        0 0 0 3px rgba(72, 99, 78, 0.08);
+}
+
+
+/* =========================================================
+   ACCOUNT SECTION
+========================================================= */
+
+.account-section {
+    margin-bottom: 32px;
+}
+
+.account-section-header {
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 15px;
+}
+
+.account-section-label {
+    margin-bottom: 6px;
+
+    color: var(--accent);
+
+    font-size: 10px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.3px;
+}
+
+.account-section-title {
+    color: var(--ink);
+
+    font-size: 19px;
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    letter-spacing: -0.35px;
+}
+
+
+/* =========================================================
+   ACCOUNT INFORMATION GRID
+========================================================= */
+
+.account-information-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+}
+
+
+/* =========================================================
+   INFORMATION CARD
+========================================================= */
+
+.account-information-card {
+    position: relative;
+
+    min-height: 108px;
+
+    padding: 21px 22px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    border: 1px solid var(--line);
+
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.25s ease,
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.account-information-card:hover {
+    background: var(--paper);
+
+    border-color: #c9c9c5;
+
+    box-shadow: var(--shadow-md);
+
+    transform: translateY(-2px);
+}
+
+
+/*
+    Small visual marker gives the cards
+    a more intentional information hierarchy.
+*/
+.account-information-card::after {
+    content: "";
+
+    position: absolute;
+
+    top: 20px;
+    right: 20px;
+
+    width: 4px;
+    height: 4px;
+
+    border-radius: 50%;
+
+    background: #d7d7d2;
+}
+
+
+/* =========================================================
+   INFORMATION LABEL
+========================================================= */
+
+.account-information-label {
+    color: #8b8b87;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    line-height: 1.2;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.05px;
+}
+
+
+/* =========================================================
+   INFORMATION VALUE
+========================================================= */
+
+.account-information-value {
+    margin-top: 9px;
+
+    color: var(--ink);
+
+    font-size: 15px;
+    font-weight: 600;
+
+    line-height: 1.45;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   INFORMATION STATUS
+========================================================= */
+
+.account-information-status {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 9px;
+
+    color: var(--success);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    line-height: 1.3;
+}
+
+
+/* =========================================================
+   ACCOUNT NOTICE
+========================================================= */
+
+.account-notice {
+    position: relative;
+
+    max-width: 900px;
+
+    padding: 20px 22px 20px 21px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #fcfcfa 100%
+        );
+
+    border: 1px solid var(--line);
+
+    border-left: 3px solid var(--accent);
+
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.account-notice::after {
+    content: "";
+
+    position: absolute;
+
+    right: -24px;
+    bottom: -30px;
+
+    width: 110px;
+    height: 110px;
+
+    border: 1px solid rgba(214, 160, 100, 0.11);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+.account-notice-content {
+    position: relative;
+
+    z-index: 1;
+
+    max-width: 700px;
+}
+
+.account-notice-label {
+    margin-bottom: 6px;
+
+    color: var(--accent);
+
+    font-size: 9px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.1px;
+}
+
+.account-notice-title {
+    color: var(--ink);
+
+    font-size: 13px;
+    font-weight: 700;
+
+    line-height: 1.35;
+}
+
+.account-notice-text {
+    max-width: 650px;
+
+    margin-top: 7px;
+
+    color: var(--mute);
+
+    font-size: 11px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+:focus-visible {
+    outline: 2px solid var(--ink);
+
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    .account-profile-card,
+    .account-information-card,
+    .nav-link,
+    .sign-out {
+        transition-duration: 0.01ms !important;
+    }
+
+}
+
+
+/* =========================================================
+   TABLET — 1100px
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .main {
+        padding: 34px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET — 900px
+========================================================= */
+
+@media (max-width: 900px) {
+
+    :root {
+        --sidebar-width: 220px;
+    }
+
+    .sidebar {
+        padding: 24px 12px;
+    }
+
+    .main {
+        padding: 30px;
+    }
+
+    .page-title {
+        font-size: 30px;
+    }
+
+    .account-profile-card {
+        padding: 23px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE — 760px
+========================================================= */
+
+@media (max-width: 760px) {
+
+    :root {
+        --sidebar-width: 0px;
+    }
+
+    .app {
+        display: block;
+    }
+
+    .sidebar {
+        position: relative;
+
+        width: 100%;
+        height: auto;
+
+        min-height: auto;
+
+        padding: 20px;
+
+        overflow: visible;
+    }
+
+    .brand {
+        padding: 0 8px 20px;
+    }
+
+    .nav {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 6px;
+    }
+
+    .nav-label {
+        grid-column: 1 / -1;
+
+        padding: 8px;
+    }
+
+    .sidebar-bottom {
+        margin-top: 20px;
+    }
+
+    .staff-profile {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .main {
+        width: 100%;
+
+        margin-left: 0;
+
+        padding: 30px 20px 42px;
+    }
+
+    .page-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 12px;
+
+        margin-bottom: 26px;
+    }
+
+    .page-title {
+        font-size: 28px;
+    }
+
+    .page-subtitle {
+        margin-top: 8px;
+    }
+
+    .page-date {
+        white-space: normal;
+    }
+
+    .account-profile-card {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 18px;
+
+        padding: 21px;
+
+        margin-bottom: 28px;
+    }
+
+    .account-status {
+        align-self: flex-start;
+    }
+
+    .account-information-grid {
+        gap: 9px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE — 520px
+========================================================= */
+
+@media (max-width: 520px) {
+
+    .main {
+        padding: 24px 16px 36px;
+    }
+
+    .page-title {
+        font-size: 26px;
+
+        letter-spacing: -0.9px;
+    }
+
+    .page-subtitle {
+        font-size: 12px;
+    }
+
+    .account-profile-card {
+        min-height: 0;
+
+        padding: 18px;
+
+        border-radius: 14px;
+    }
+
+    .account-profile {
+        gap: 14px;
+    }
+
+    .account-avatar {
+        width: 54px;
+        min-width: 54px;
+
+        height: 54px;
+
+        font-size: 19px;
+
+        border-radius: 13px;
+    }
+
+    .account-profile-name {
+        font-size: 18px;
+    }
+
+    .account-profile-role {
+        margin-top: 6px;
+    }
+
+    .account-information-grid {
+        grid-template-columns: 1fr;
+
+        gap: 8px;
+    }
+
+    .account-information-card {
+        min-height: 92px;
+
+        padding: 17px 18px;
+    }
+
+    .account-information-card::after {
+        top: 17px;
+        right: 17px;
+    }
+
+    .account-notice {
+        padding: 17px 18px;
+    }
+
+}

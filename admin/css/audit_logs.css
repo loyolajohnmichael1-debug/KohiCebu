@@ -1,0 +1,1188 @@
+/* =========================================================
+   KOHICEBU ADMIN PORTAL
+   AUDIT LOGS
+   UI POLISH
+========================================================= */
+
+
+/* =========================================================
+   PAGE VARIABLES
+========================================================= */
+
+:root {
+
+    --audit-black: #111111;
+    --audit-dark: #1a1a1a;
+
+    --audit-white: #ffffff;
+
+    --audit-background: #f7f7f5;
+
+    --audit-text: #202020;
+    --audit-muted: #777777;
+
+    --audit-border: #dedede;
+    --audit-border-light: #eeeeee;
+
+    --audit-accent: #b58b52;
+
+    --audit-success: #2f7d4a;
+    --audit-danger: #b84a4a;
+    --audit-warning: #a87524;
+
+    --audit-transition:
+        0.2s ease;
+
+    --audit-transition-slow:
+        0.3s ease;
+
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.main-content .page-header {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    margin-bottom: 30px;
+
+    animation:
+        auditFadeUp
+        0.4s ease both;
+
+}
+
+
+.main-content .page-eyebrow {
+
+    margin: 0 0 7px;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.4px;
+
+    color: #777777;
+
+}
+
+
+.main-content .page-header h1 {
+
+    margin: 0;
+
+    font-size: 31px;
+
+    line-height: 1.15;
+
+    font-weight: 800;
+
+    letter-spacing: -0.7px;
+
+    color: var(--audit-black);
+
+}
+
+
+.main-content .page-description {
+
+    margin: 9px 0 0;
+
+    max-width: 720px;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    color: #777777;
+
+}
+
+
+/* =========================================================
+   BUTTON BASE
+========================================================= */
+
+.main-content .refresh-button,
+.main-content .apply-button,
+.main-content .clear-button {
+
+    border: 1px solid transparent;
+
+    cursor: pointer;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    line-height: 1;
+
+    transition:
+
+        background var(--audit-transition),
+
+        border-color var(--audit-transition),
+
+        color var(--audit-transition),
+
+        box-shadow var(--audit-transition),
+
+        transform var(--audit-transition);
+
+}
+
+
+.main-content .refresh-button:hover,
+.main-content .apply-button:hover,
+.main-content .clear-button:hover {
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.main-content .refresh-button:active,
+.main-content .apply-button:active,
+.main-content .clear-button:active {
+
+    transform:
+        translateY(0);
+
+}
+
+
+/* =========================================================
+   REFRESH BUTTON
+========================================================= */
+
+.main-content .refresh-button {
+
+    min-width: 92px;
+
+    height: 44px;
+
+    padding: 0 18px;
+
+    border-radius: 8px;
+
+    background: var(--audit-black);
+
+    color: var(--audit-white);
+
+    white-space: nowrap;
+
+    box-shadow:
+        0 3px 8px rgba(0, 0, 0, 0.08);
+
+}
+
+
+.main-content .refresh-button:hover {
+
+    background: var(--audit-dark);
+
+    box-shadow:
+        0 6px 14px rgba(0, 0, 0, 0.12);
+
+}
+
+
+.main-content .refresh-button:active {
+
+    box-shadow:
+        0 2px 5px rgba(0, 0, 0, 0.08);
+
+}
+
+
+/* =========================================================
+   FILTER CARD
+========================================================= */
+
+.main-content .filter-card {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    flex-wrap: wrap;
+
+    gap: 14px;
+
+    width: 100%;
+
+    margin-bottom: 18px;
+
+    padding: 22px;
+
+    background: var(--audit-white);
+
+    border: 1px solid var(--audit-border);
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.025);
+
+    animation:
+        auditFadeUp
+        0.45s ease
+        0.05s both;
+
+    transition:
+
+        border-color var(--audit-transition),
+
+        box-shadow var(--audit-transition);
+
+}
+
+
+.main-content .filter-card:hover {
+
+    border-color: #d5d5d5;
+
+    box-shadow:
+        0 5px 16px rgba(0, 0, 0, 0.035);
+
+}
+
+
+.main-content .filter-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+    min-width: 190px;
+
+}
+
+
+.main-content .filter-group label {
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.8px;
+
+    color: #666666;
+
+}
+
+
+.main-content .filter-group input {
+
+    width: 100%;
+
+    height: 42px;
+
+    padding: 0 12px;
+
+    border: 1px solid #d8d8d8;
+
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: var(--audit-text);
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    outline: none;
+
+    transition:
+
+        border-color var(--audit-transition),
+
+        box-shadow var(--audit-transition),
+
+        background var(--audit-transition);
+
+}
+
+
+.main-content .filter-group input:hover {
+
+    border-color: #c8c8c8;
+
+}
+
+
+.main-content .filter-group input:focus {
+
+    border-color: var(--audit-black);
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(17, 17, 17, 0.055);
+
+}
+
+
+/* =========================================================
+   APPLY BUTTON
+========================================================= */
+
+.main-content .apply-button {
+
+    height: 42px;
+
+    padding: 0 18px;
+
+    border-radius: 7px;
+
+    background: var(--audit-black);
+
+    color: var(--audit-white);
+
+    box-shadow:
+        0 3px 7px rgba(0, 0, 0, 0.06);
+
+}
+
+
+.main-content .apply-button:hover {
+
+    background: var(--audit-dark);
+
+    box-shadow:
+        0 5px 12px rgba(0, 0, 0, 0.10);
+
+}
+
+
+/* =========================================================
+   CLEAR BUTTON
+========================================================= */
+
+.main-content .clear-button {
+
+    height: 42px;
+
+    padding: 0 18px;
+
+    border-radius: 7px;
+
+    background: #eee9df;
+
+    color: var(--audit-black);
+
+}
+
+
+.main-content .clear-button:hover {
+
+    background: #e5dfd4;
+
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.05);
+
+}
+
+
+/* =========================================================
+   SUMMARY CARD
+========================================================= */
+
+.main-content .summary-card {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    width: 100%;
+
+    min-height: 105px;
+
+    margin-bottom: 18px;
+
+    padding: 20px 24px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            110deg,
+            #111111 0%,
+            #151515 65%,
+            #1b1b1b 100%
+        );
+
+    border: 1px solid #111111;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 5px 16px rgba(0, 0, 0, 0.07);
+
+    animation:
+        auditFadeUp
+        0.45s ease
+        0.1s both;
+
+    transition:
+
+        transform var(--audit-transition-slow),
+
+        box-shadow var(--audit-transition-slow);
+
+}
+
+
+.main-content .summary-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: -35%;
+
+    width: 35%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.045),
+            transparent
+        );
+
+    transform:
+        skewX(-20deg);
+
+    transition:
+        left 0.6s ease;
+
+    pointer-events: none;
+
+}
+
+
+.main-content .summary-card:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.10);
+
+}
+
+
+.main-content .summary-card:hover::after {
+
+    left: 110%;
+
+}
+
+
+.main-content .summary-card > div {
+
+    position: relative;
+
+    z-index: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+}
+
+
+.main-content .summary-label {
+
+    color: #bdbdbd;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.9px;
+
+    text-transform: uppercase;
+
+}
+
+
+.main-content .summary-card strong {
+
+    color: var(--audit-white);
+
+    font-size: 28px;
+
+    line-height: 1;
+
+    font-weight: 800;
+
+}
+
+
+/* =========================================================
+   TABLE CARD
+========================================================= */
+
+.main-content .table-card {
+
+    width: 100%;
+
+    background: var(--audit-white);
+
+    border: 1px solid var(--audit-border);
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.025);
+
+    overflow: hidden;
+
+    animation:
+        auditFadeUp
+        0.45s ease
+        0.15s both;
+
+    transition:
+
+        border-color var(--audit-transition),
+
+        box-shadow var(--audit-transition);
+
+}
+
+
+.main-content .table-card:hover {
+
+    border-color: #d5d5d5;
+
+    box-shadow:
+        0 5px 16px rgba(0, 0, 0, 0.035);
+
+}
+
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.main-content .table-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    min-height: 88px;
+
+    padding: 20px 24px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid var(--audit-border);
+
+}
+
+
+.main-content .table-header h2 {
+
+    margin: 0;
+
+    font-size: 18px;
+
+    line-height: 1.3;
+
+    font-weight: 800;
+
+    color: var(--audit-black);
+
+}
+
+
+.main-content .table-header p {
+
+    margin: 6px 0 0;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    color: #777777;
+
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
+
+.main-content .table-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    scrollbar-width: thin;
+
+}
+
+
+/* =========================================================
+   AUDIT TABLE
+========================================================= */
+
+.main-content .table-card table {
+
+    width: 100%;
+
+    min-width: 1050px;
+
+    border-collapse: collapse;
+
+    border-spacing: 0;
+
+}
+
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.main-content .table-card thead {
+
+    background: #fafafa;
+
+}
+
+
+.main-content .table-card th {
+
+    padding: 13px 16px;
+
+    text-align: left;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.8px;
+
+    line-height: 1.2;
+
+    color: #666666;
+
+    white-space: nowrap;
+
+    border-bottom: 1px solid var(--audit-border);
+
+}
+
+
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+.main-content .table-card td {
+
+    padding: 16px;
+
+    vertical-align: middle;
+
+    font-size: 13px;
+
+    line-height: 1.4;
+
+    color: var(--audit-text);
+
+    border-bottom: 1px solid var(--audit-border-light);
+
+}
+
+
+.main-content .table-card tbody tr {
+
+    transition:
+
+        background var(--audit-transition),
+
+        box-shadow var(--audit-transition),
+
+        transform var(--audit-transition);
+
+}
+
+
+.main-content .table-card tbody tr:hover {
+
+    background: #fafaf8;
+
+}
+
+
+.main-content .table-card tbody tr:last-child td {
+
+    border-bottom: none;
+
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.main-content .date-text {
+
+    display: block;
+
+    min-width: 160px;
+
+    color: #555555;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   USER
+========================================================= */
+
+.main-content .user-cell {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 160px;
+
+}
+
+
+.main-content .user-cell strong {
+
+    color: var(--audit-black);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+}
+
+
+.main-content .user-cell span {
+
+    color: #888888;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================================
+   ROLE BADGE
+========================================================= */
+
+.main-content .role-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    background: #eee9df;
+
+    color: #333333;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+
+    white-space: nowrap;
+
+    transition:
+
+        transform var(--audit-transition),
+
+        background var(--audit-transition);
+
+}
+
+
+.main-content .table-card tbody tr:hover .role-badge {
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+/* =========================================================
+   ACTION BADGE
+========================================================= */
+
+.main-content .action-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 6px 9px;
+
+    border-radius: 6px;
+
+    background: #f0f0f0;
+
+    color: #444444;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.3px;
+
+    white-space: nowrap;
+
+    transition:
+
+        transform var(--audit-transition),
+
+        filter var(--audit-transition);
+
+}
+
+
+.main-content .table-card tbody tr:hover .action-badge {
+
+    transform:
+        translateY(-1px);
+
+    filter:
+        brightness(0.98);
+
+}
+
+
+/* =========================================================
+   ACTION COLORS
+========================================================= */
+
+.main-content .action-create,
+.main-content .action-upload,
+.main-content .action-stock_in {
+
+    background: #e8f4eb;
+
+    color: var(--audit-success);
+
+}
+
+
+.main-content .action-update,
+.main-content .action-status_update,
+.main-content .action-adjustment {
+
+    background: #f1eee6;
+
+    color: #80642e;
+
+}
+
+
+.main-content .action-payment_confirmed,
+.main-content .action-activate {
+
+    background: #e8f4eb;
+
+    color: var(--audit-success);
+
+}
+
+
+.main-content .action-delete,
+.main-content .action-deactivate,
+.main-content .action-cancel {
+
+    background: #f9e9e9;
+
+    color: var(--audit-danger);
+
+}
+
+
+.main-content .action-stock_out,
+.main-content .action-waste {
+
+    background: #fff3df;
+
+    color: var(--audit-warning);
+
+}
+
+
+/* =========================================================
+   MODULE
+========================================================= */
+
+.main-content .module-text {
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.7px;
+
+    color: #444444;
+
+}
+
+
+/* =========================================================
+   TARGET
+========================================================= */
+
+.main-content .target-text {
+
+    display: inline-block;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    color: var(--audit-black);
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.main-content .description-text {
+
+    display: block;
+
+    min-width: 230px;
+
+    max-width: 380px;
+
+    color: #555555;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   EMPTY / ERROR STATE
+========================================================= */
+
+.main-content .empty-state {
+
+    padding: 55px 20px !important;
+
+    text-align: center;
+
+    color: #777777;
+
+    font-size: 13px;
+
+}
+
+
+.main-content .error-state {
+
+    color: var(--audit-danger);
+
+}
+
+
+/* =========================================================
+   PAGE ENTRANCE ANIMATION
+========================================================= */
+
+@keyframes auditFadeUp {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(8px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .main-content .page-header {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .main-content .refresh-button {
+
+        width: 100%;
+
+    }
+
+
+    .main-content .filter-card {
+
+        align-items: stretch;
+
+        flex-direction: column;
+
+    }
+
+
+    .main-content .filter-group {
+
+        width: 100%;
+
+        min-width: 0;
+
+    }
+
+
+    .main-content .filter-group input,
+    .main-content .apply-button,
+    .main-content .clear-button {
+
+        width: 100%;
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — SMALL SCREENS
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .main-content .page-header h1 {
+
+        font-size: 25px;
+
+    }
+
+
+    .main-content .table-header {
+
+        padding: 18px;
+
+    }
+
+
+    .main-content .summary-card {
+
+        min-height: 95px;
+
+        padding: 18px;
+
+    }
+
+
+    .main-content .filter-card {
+
+        padding: 18px;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUCE MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .main-content .page-header,
+    .main-content .filter-card,
+    .main-content .summary-card,
+    .main-content .table-card {
+
+        animation: none;
+
+    }
+
+
+    .main-content .refresh-button,
+    .main-content .apply-button,
+    .main-content .clear-button,
+    .main-content .filter-group input,
+    .main-content .summary-card,
+    .main-content .role-badge,
+    .main-content .action-badge,
+    .main-content .table-card tbody tr {
+
+        transition: none;
+
+    }
+
+}

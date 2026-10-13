@@ -1,0 +1,1831 @@
+/* =========================================================
+   KOHICEBU ADMIN PORTAL
+   INVENTORY PAGE
+   UI POLISH + SPACING + TRANSITIONS
+========================================================= */
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root {
+
+    --inventory-black: #171717;
+    --inventory-text: #333333;
+    --inventory-muted: #777777;
+    --inventory-light-muted: #888888;
+
+    --inventory-white: #ffffff;
+    --inventory-background: #f7f7f5;
+
+    --inventory-border: #e8e8e8;
+    --inventory-border-light: #eeeeee;
+    --inventory-border-input: #dddddd;
+
+    --inventory-accent: #d4a373;
+    --inventory-accent-dark: #c49364;
+
+    --inventory-green: #26733d;
+    --inventory-green-bg: #edf8f0;
+
+    --inventory-yellow: #946800;
+    --inventory-yellow-bg: #fff6df;
+
+    --inventory-red: #a83a2f;
+    --inventory-red-bg: #fff0ee;
+
+    --inventory-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.04);
+
+    --inventory-shadow-hover:
+        0 9px 22px rgba(0, 0, 0, 0.055);
+
+    --inventory-transition:
+        0.2s ease;
+
+    --inventory-transition-slow:
+        0.3s ease;
+
+}
+
+
+/* =========================================================
+   GLOBAL PAGE LAYOUT
+========================================================= */
+
+.main-content {
+
+    margin-left: 300px;
+
+    min-height: 100vh;
+
+    width: calc(100% - 300px);
+
+    min-width: 0;
+
+    box-sizing: border-box;
+
+    /*
+     * Balanced left/right spacing.
+     * Prevents cards and panels from sitting
+     * directly against the page edges.
+     */
+    padding: 34px 42px 55px;
+
+    background: var(--inventory-background);
+
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 26px;
+
+    animation:
+        inventoryFadeUp
+        0.4s ease
+        both;
+
+}
+
+
+.page-header h1 {
+
+    margin: 0 0 7px;
+
+    color: var(--inventory-black);
+
+    font-size: 29px;
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+}
+
+
+.page-header p {
+
+    margin: 0;
+
+    color: var(--inventory-muted);
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+}
+
+
+.header-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-shrink: 0;
+
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.inventory-summary {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 18px;
+
+    width: 100%;
+
+    margin-bottom: 24px;
+
+}
+
+
+.summary-card {
+
+    position: relative;
+
+    overflow: hidden;
+
+    min-width: 0;
+
+    box-sizing: border-box;
+
+    padding: 19px 20px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--inventory-border);
+
+    border-radius: 14px;
+
+    box-shadow:
+        var(--inventory-shadow);
+
+    animation:
+        inventoryFadeUp
+        0.42s ease
+        both;
+
+    transition:
+
+        transform var(--inventory-transition-slow),
+
+        border-color var(--inventory-transition),
+
+        box-shadow var(--inventory-transition);
+
+}
+
+
+.summary-card:nth-child(1) {
+
+    animation-delay: 0.05s;
+
+}
+
+
+.summary-card:nth-child(2) {
+
+    animation-delay: 0.10s;
+
+}
+
+
+.summary-card:nth-child(3) {
+
+    animation-delay: 0.15s;
+
+}
+
+
+.summary-card:nth-child(4) {
+
+    animation-delay: 0.20s;
+
+}
+
+
+.summary-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 3px;
+
+    background: var(--inventory-accent);
+
+    opacity: 0.75;
+
+    transition:
+        opacity var(--inventory-transition);
+
+}
+
+
+.summary-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    border-color: #dddddd;
+
+    box-shadow:
+        var(--inventory-shadow-hover);
+
+}
+
+
+.summary-card:hover::before {
+
+    opacity: 1;
+
+}
+
+
+.summary-label {
+
+    margin-bottom: 7px;
+
+    color: var(--inventory-muted);
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.05em;
+
+}
+
+
+.summary-value {
+
+    color: var(--inventory-black);
+
+    font-size: 26px;
+
+    font-weight: 700;
+
+    line-height: 1.15;
+
+}
+
+
+/* =========================================================
+   INVENTORY TOOLBAR
+========================================================= */
+
+.inventory-toolbar {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-bottom: 18px;
+
+    animation:
+        inventoryFadeUp
+        0.45s ease
+        0.08s both;
+
+}
+
+
+.toolbar-left,
+.toolbar-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.search-box {
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+
+.search-box input,
+.inventory-filter {
+
+    height: 42px;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--inventory-border-input);
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #222222;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    outline: none;
+
+    transition:
+
+        border-color var(--inventory-transition),
+
+        box-shadow var(--inventory-transition),
+
+        background var(--inventory-transition);
+
+}
+
+
+.search-box input {
+
+    width: 280px;
+
+    padding: 0 13px;
+
+}
+
+
+.inventory-filter {
+
+    min-width: 145px;
+
+    padding: 0 12px;
+
+    cursor: pointer;
+
+}
+
+
+.search-box input:hover,
+.inventory-filter:hover {
+
+    border-color: #c9c9c9;
+
+}
+
+
+.search-box input:focus,
+.inventory-filter:focus {
+
+    border-color: var(--inventory-accent);
+
+    background: #fffefd;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(212, 163, 115, 0.12);
+
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.primary-button,
+.secondary-button {
+
+    height: 40px;
+
+    box-sizing: border-box;
+
+    padding: 0 14px;
+
+    border-radius: 9px;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+
+        background var(--inventory-transition),
+
+        border-color var(--inventory-transition),
+
+        color var(--inventory-transition),
+
+        box-shadow var(--inventory-transition),
+
+        transform var(--inventory-transition),
+
+        opacity var(--inventory-transition);
+
+}
+
+
+.primary-button {
+
+    border: 1px solid var(--inventory-accent);
+
+    background: var(--inventory-accent);
+
+    color: #ffffff;
+
+    box-shadow:
+        0 3px 8px rgba(212, 163, 115, 0.08);
+
+}
+
+
+.primary-button:hover {
+
+    background: var(--inventory-accent-dark);
+
+    border-color: var(--inventory-accent-dark);
+
+    box-shadow:
+        0 6px 13px rgba(212, 163, 115, 0.14);
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.primary-button:active,
+.secondary-button:active {
+
+    transform:
+        translateY(1px);
+
+    box-shadow: none;
+
+}
+
+
+.primary-button:disabled,
+.secondary-button:disabled {
+
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+
+}
+
+
+.secondary-button {
+
+    border: 1px solid var(--inventory-border-input);
+
+    background: #ffffff;
+
+    color: #333333;
+
+}
+
+
+.secondary-button:hover {
+
+    background: #f7f7f7;
+
+    border-color: #cccccc;
+
+    box-shadow:
+        0 4px 9px rgba(0, 0, 0, 0.035);
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+/* =========================================================
+   INVENTORY CARD
+========================================================= */
+
+.inventory-card {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid var(--inventory-border);
+
+    border-radius: 16px;
+
+    box-shadow:
+        var(--inventory-shadow);
+
+    animation:
+        inventoryFadeUp
+        0.48s ease
+        0.12s both;
+
+    transition:
+
+        border-color var(--inventory-transition),
+
+        box-shadow var(--inventory-transition);
+
+}
+
+
+.inventory-card:hover {
+
+    border-color: #dddddd;
+
+    box-shadow:
+        var(--inventory-shadow-hover);
+
+}
+
+
+.inventory-card-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding: 21px 24px;
+
+    border-bottom: 1px solid var(--inventory-border-light);
+
+}
+
+
+.inventory-card-header h2 {
+
+    margin: 0 0 5px;
+
+    color: var(--inventory-black);
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+}
+
+
+.inventory-card-header p {
+
+    margin: 0;
+
+    color: var(--inventory-muted);
+
+    font-size: 12px;
+
+}
+
+
+.inventory-count {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 32px;
+
+    box-sizing: border-box;
+
+    padding: 0 11px;
+
+    flex-shrink: 0;
+
+    border: 1px solid #e6ddd5;
+
+    border-radius: 9px;
+
+    background: #faf7f3;
+
+    color: #777777;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    transition:
+
+        border-color var(--inventory-transition),
+
+        background var(--inventory-transition),
+
+        transform var(--inventory-transition),
+
+        box-shadow var(--inventory-transition);
+
+}
+
+
+.inventory-count:hover {
+
+    border-color: #d8c6b6;
+
+    background: #f7f1eb;
+
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.035);
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+/* =========================================================
+   INVENTORY TABLE
+========================================================= */
+
+.inventory-table-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+}
+
+
+.inventory-table {
+
+    width: 100%;
+
+    min-width: 900px;
+
+    border-collapse: collapse;
+
+}
+
+
+.inventory-table th {
+
+    padding: 13px 18px;
+
+    border-bottom: 1px solid var(--inventory-border-light);
+
+    background: #fafafa;
+
+    color: var(--inventory-muted);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.05em;
+
+    text-align: left;
+
+    white-space: nowrap;
+
+}
+
+
+.inventory-table td {
+
+    padding: 15px 18px;
+
+    border-bottom: 1px solid var(--inventory-border-light);
+
+    color: var(--inventory-text);
+
+    font-size: 13px;
+
+    vertical-align: middle;
+
+}
+
+
+.inventory-table tbody tr {
+
+    transition:
+        background var(--inventory-transition);
+
+}
+
+
+.inventory-table tbody tr:last-child td {
+
+    border-bottom: none;
+
+}
+
+
+.inventory-table tbody tr:hover {
+
+    background: #fcfcfc;
+
+}
+
+
+.inventory-table tbody tr:hover td {
+
+    border-bottom-color: #e9e9e9;
+
+}
+
+
+/* =========================================================
+   STOCK STATUS
+========================================================= */
+
+.stock-status {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 27px;
+
+    box-sizing: border-box;
+
+    padding: 4px 9px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    transition:
+
+        transform var(--inventory-transition),
+
+        box-shadow var(--inventory-transition);
+
+}
+
+
+.inventory-table tbody tr:hover .stock-status {
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.stock-status.in-stock {
+
+    background: var(--inventory-green-bg);
+
+    color: var(--inventory-green);
+
+}
+
+
+.stock-status.low-stock {
+
+    background: var(--inventory-yellow-bg);
+
+    color: var(--inventory-yellow);
+
+}
+
+
+.stock-status.out-of-stock {
+
+    background: var(--inventory-red-bg);
+
+    color: var(--inventory-red);
+
+}
+
+
+/* =========================================================
+   AVAILABILITY
+========================================================= */
+
+.availability-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 27px;
+
+    box-sizing: border-box;
+
+    padding: 4px 9px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    transition:
+
+        transform var(--inventory-transition),
+
+        box-shadow var(--inventory-transition);
+
+}
+
+
+.inventory-table tbody tr:hover .availability-badge {
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.availability-badge.available {
+
+    background: var(--inventory-green-bg);
+
+    color: var(--inventory-green);
+
+}
+
+
+.availability-badge.unavailable {
+
+    background: #f2f2f2;
+
+    color: var(--inventory-muted);
+
+}
+
+
+/* =========================================================
+   TABLE ACTIONS
+========================================================= */
+
+.inventory-table td:last-child {
+
+    white-space: nowrap;
+
+}
+
+
+.inventory-action-button,
+.inventory-delete-button {
+
+    height: 32px;
+
+    box-sizing: border-box;
+
+    padding: 0 10px;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+
+        background var(--inventory-transition),
+
+        border-color var(--inventory-transition),
+
+        color var(--inventory-transition),
+
+        box-shadow var(--inventory-transition),
+
+        transform var(--inventory-transition);
+
+}
+
+
+/* =========================================================
+   MANAGE BUTTON
+========================================================= */
+
+.inventory-action-button {
+
+    border: 1px solid #dddddd;
+
+    color: #333333;
+
+}
+
+
+.inventory-action-button:hover {
+
+    border-color: var(--inventory-accent);
+
+    background: #fffaf5;
+
+    box-shadow:
+        0 3px 8px rgba(212, 163, 115, 0.08);
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.inventory-action-button:active {
+
+    transform:
+        translateY(1px);
+
+    box-shadow: none;
+
+}
+
+
+/* =========================================================
+   DELETE BUTTON
+========================================================= */
+
+.inventory-action-button.inventory-delete-button {
+
+    margin-left: 8px;
+
+    border-color: #dddddd;
+
+    background: #ffffff;
+
+    color: var(--inventory-red);
+
+}
+
+
+.inventory-action-button.inventory-delete-button:hover {
+
+    border-color: var(--inventory-accent);
+
+    background: #fffaf5;
+
+    color: #96352c;
+
+    box-shadow:
+        0 3px 8px rgba(212, 163, 115, 0.08);
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.inventory-action-button.inventory-delete-button:disabled {
+
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+
+}
+
+
+/* =========================================================
+   INVENTORY STATES
+========================================================= */
+
+.inventory-state {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 240px;
+
+    box-sizing: border-box;
+
+    padding: 45px 24px;
+
+    text-align: center;
+
+    animation:
+        inventoryFadeUp
+        0.25s ease
+        both;
+
+}
+
+
+.state-title {
+
+    margin-bottom: 7px;
+
+    color: #333333;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+}
+
+
+.state-message {
+
+    color: #888888;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+}
+
+
+.error-state .state-title {
+
+    color: var(--inventory-red);
+
+}
+
+
+/* =========================================================
+   SYSTEM STATUS
+========================================================= */
+
+.system-status {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 18px;
+
+    padding: 12px 15px;
+
+    border: 1px solid var(--inventory-border);
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: var(--inventory-muted);
+
+    font-size: 11px;
+
+    line-height: 1.5;
+
+    transition:
+
+        border-color var(--inventory-transition),
+
+        box-shadow var(--inventory-transition);
+
+}
+
+
+.system-status:hover {
+
+    border-color: #dddddd;
+
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.03);
+
+}
+
+
+/* =========================================================
+   MODAL OVERLAY
+========================================================= */
+
+.modal-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    backdrop-filter: blur(3px);
+
+    animation:
+        inventoryOverlayIn
+        0.2s ease
+        both;
+
+}
+
+
+.modal-overlay[hidden] {
+
+    display: none !important;
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.inventory-modal {
+
+    width:
+        min(
+            520px,
+            100%
+        );
+
+    max-height:
+        calc(100vh - 40px);
+
+    box-sizing: border-box;
+
+    overflow-y: auto;
+
+    border: 1px solid var(--inventory-border);
+
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.18);
+
+    animation:
+        inventoryModalIn
+        0.25s ease
+        both;
+
+}
+
+
+/* =========================================================
+   MODAL HEADER
+========================================================= */
+
+.modal-header {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding: 22px 24px;
+
+    border-bottom: 1px solid var(--inventory-border-light);
+
+}
+
+
+.modal-header h2 {
+
+    margin: 0 0 5px;
+
+    color: var(--inventory-black);
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+}
+
+
+.modal-header p {
+
+    margin: 0;
+
+    color: var(--inventory-muted);
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+}
+
+
+.modal-close {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 34px;
+
+    height: 34px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #f5f5f5;
+
+    color: #555555;
+
+    font-family: inherit;
+
+    font-size: 20px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+
+        background var(--inventory-transition),
+
+        color var(--inventory-transition),
+
+        transform var(--inventory-transition);
+
+}
+
+
+.modal-close:hover {
+
+    background: #eeeeee;
+
+    color: #222222;
+
+    transform:
+        rotate(3deg);
+
+}
+
+
+/* =========================================================
+   MODAL BODY
+========================================================= */
+
+.modal-body {
+
+    padding: 22px 24px;
+
+}
+
+
+/* =========================================================
+   MODAL FOOTER
+========================================================= */
+
+.modal-footer {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    padding: 18px 24px;
+
+    border-top: 1px solid var(--inventory-border-light);
+
+}
+
+
+/* =========================================================
+   SELECTED INGREDIENT
+========================================================= */
+
+.selected-ingredient {
+
+    margin-bottom: 20px;
+
+    padding: 13px 14px;
+
+    border: 1px solid #eee1d4;
+
+    border-radius: 10px;
+
+    background: #faf7f3;
+
+    color: #5f4a37;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    transition:
+
+        border-color var(--inventory-transition),
+
+        box-shadow var(--inventory-transition);
+
+}
+
+
+.selected-ingredient:hover {
+
+    border-color: #e3d2c0;
+
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.025);
+
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form-group {
+
+    margin-bottom: 17px;
+
+}
+
+
+.form-group label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #333333;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--inventory-border-input);
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: #222222;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    outline: none;
+
+    transition:
+
+        border-color var(--inventory-transition),
+
+        box-shadow var(--inventory-transition),
+
+        background var(--inventory-transition);
+
+}
+
+
+.form-group input,
+.form-group select {
+
+    height: 42px;
+
+    padding: 0 12px;
+
+}
+
+
+.form-group textarea {
+
+    min-height: 90px;
+
+    padding: 11px 12px;
+
+    resize: vertical;
+
+    line-height: 1.5;
+
+}
+
+
+.form-group input:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+
+    border-color: #cccccc;
+
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+
+    border-color: var(--inventory-accent);
+
+    background: #fffefd;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(212, 163, 115, 0.12);
+
+}
+
+
+.input-help {
+
+    margin-top: 6px;
+
+    color: #888888;
+
+    font-size: 11px;
+
+}
+
+
+.modal-error {
+
+    margin-top: 12px;
+
+    padding: 11px 13px;
+
+    border: 1px solid #f2cbc6;
+
+    border-radius: 9px;
+
+    background: var(--inventory-red-bg);
+
+    color: var(--inventory-red);
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes inventoryFadeUp {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(8px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+@keyframes inventoryOverlayIn {
+
+    from {
+
+        opacity: 0;
+
+    }
+
+    to {
+
+        opacity: 1;
+
+    }
+
+}
+
+
+@keyframes inventoryModalIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(10px)
+            scale(0.985);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .main-content {
+
+        margin-left: 300px;
+
+        width: calc(100% - 300px);
+
+        padding:
+            30px
+            30px
+            45px;
+
+    }
+
+
+    .inventory-summary {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    .main-content {
+
+        margin-left: 0;
+
+        width: 100%;
+
+        padding:
+            28px
+            24px
+            42px;
+
+    }
+
+
+    .page-header {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .header-actions {
+
+        justify-content: flex-start;
+
+    }
+
+
+    .inventory-toolbar {
+
+        align-items: stretch;
+
+        flex-direction: column;
+
+    }
+
+
+    .toolbar-left,
+    .toolbar-right {
+
+        width: 100%;
+
+    }
+
+
+    .toolbar-left {
+
+        align-items: stretch;
+
+        flex-direction: column;
+
+    }
+
+
+    .search-box,
+    .search-box input,
+    .inventory-filter {
+
+        width: 100%;
+
+    }
+
+
+    .toolbar-right {
+
+        justify-content: flex-start;
+
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .main-content {
+
+        padding:
+            22px
+            16px
+            35px;
+
+    }
+
+
+    .page-header h1 {
+
+        font-size: 25px;
+
+    }
+
+
+    .inventory-summary {
+
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+
+    }
+
+
+    .inventory-card-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+
+    .modal-overlay {
+
+        padding: 12px;
+
+    }
+
+
+    .inventory-modal {
+
+        max-height:
+            calc(100vh - 24px);
+
+    }
+
+
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+
+        padding-left: 18px;
+
+        padding-right: 18px;
+
+    }
+
+
+    .modal-footer {
+
+        flex-direction: column-reverse;
+
+    }
+
+
+    .modal-footer button {
+
+        width: 100%;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .page-header,
+    .summary-card,
+    .inventory-toolbar,
+    .inventory-card,
+    .inventory-state,
+    .modal-overlay,
+    .inventory-modal {
+
+        animation: none;
+
+    }
+
+
+    .summary-card,
+    .search-box input,
+    .inventory-filter,
+    .primary-button,
+    .secondary-button,
+    .inventory-card,
+    .inventory-table tbody tr,
+    .stock-status,
+    .availability-badge,
+    .inventory-action-button,
+    .modal-close,
+    .selected-ingredient,
+    .form-group input,
+    .form-group select,
+    .form-group textarea,
+    .system-status,
+    .inventory-count {
+
+        transition: none;
+
+    }
+
+}
