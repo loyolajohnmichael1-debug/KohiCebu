@@ -7,6 +7,7 @@ require_once __DIR__ . "/auth.php";
 require_once __DIR__ . "/audit.php";
 
 use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\AndroidConfig;
 use Kreait\Firebase\Messaging\Notification;
 
 
@@ -813,12 +814,21 @@ if (
                             " is ready for pickup. Please proceed to the counter."
                     );
 
-                $message =
+                
+                        $androidConfig = AndroidConfig::fromArray([
+                            "priority" => "high",
+                            "notification" => [
+                                "channel_id" => "kohicebu_orders_v3",
+                                "sound" => "default"
+                            ]
+                        ]);
+$message =
                     CloudMessage::new()
                         ->toToken($fcm_token)
                         ->withNotification(
                             $notification
                         )
+                        ->withAndroidConfig($androidConfig)
                         ->withData([
                             "notification_type" =>
                                 "ORDER_READY",
