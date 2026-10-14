@@ -955,6 +955,16 @@ function renderProducts(products) {
                 }
             );
 
+            const editPriceButton =
+                document.createElement("button");
+
+            editPriceButton.type = "button";
+            editPriceButton.className = "product-action-button";
+            editPriceButton.textContent = "EDIT PRICE";
+            editPriceButton.addEventListener("click", function () {
+                editProductPrice(product);
+            });
+
 
             const recipeButton =
                 document.createElement("button");
@@ -1013,6 +1023,10 @@ function renderProducts(products) {
 
             actions.appendChild(
                 detailsButton
+            );
+
+            actions.appendChild(
+                editPriceButton
             );
 
             
@@ -1079,6 +1093,42 @@ function renderProducts(products) {
             renderProducts(products);
         }
     );
+
+}
+
+
+async function editProductPrice(product) {
+
+    const enteredPrice = window.prompt(
+        `Enter the new price for ${product.product_name} (PHP):`,
+        Number(product.price).toFixed(2)
+    );
+
+    if (enteredPrice === null) {
+        return;
+    }
+
+    const price = Number(enteredPrice.trim());
+
+    if (!Number.isFinite(price) || price <= 0 || price > 99999999.99) {
+        window.alert("Enter a valid price greater than ₱0.00.");
+        return;
+    }
+
+    try {
+        await apiRequest("update_product_price.php", {
+            method: "POST",
+            body: JSON.stringify({
+                product_id: product.product_id,
+                price
+            })
+        });
+
+        await loadProducts();
+        setSystemStatus(`Price updated for ${product.product_name}.`);
+    } catch (error) {
+        window.alert(error.message || "Unable to update product price.");
+    }
 
 }
 

@@ -1,3 +1,4 @@
+
 <?php
 
 header("Content-Type: application/json; charset=UTF-8");
@@ -69,6 +70,8 @@ $product_result = pg_query_params(
 );
 
 if (!$product_result) {
+    error_log("Failed to verify product before image upload.");
+
     http_response_code(500);
     echo json_encode([
         "success" => false,
@@ -118,10 +121,8 @@ if ($file["error"] !== UPLOAD_ERR_OK) {
 
 /*
  * ---------------------------------------------------------
- * FILE SIZE VALIDATION
+ * FILE SIZE VALIDATION: MAXIMUM 5 MB
  * ---------------------------------------------------------
- *
- * Maximum: 5 MB
  */
 
 $max_file_size = 5 * 1024 * 1024;
@@ -146,7 +147,7 @@ if ($file["size"] > $max_file_size) {
 
 /*
  * ---------------------------------------------------------
- * VERIFY ACTUAL IMAGE
+ * VERIFY ACTUAL IMAGE CONTENT
  * ---------------------------------------------------------
  */
 
@@ -160,12 +161,6 @@ if ($image_info === false) {
     ]);
     exit;
 }
-
-/*
- * ---------------------------------------------------------
- * ALLOWED MIME TYPES
- * ---------------------------------------------------------
- */
 
 $allowed_mime_types = [
     "image/jpeg" => "jpg",
@@ -188,21 +183,26 @@ $extension = $allowed_mime_types[$file_mime];
 
 /*
  * ---------------------------------------------------------
- * CLOUDINARY CONFIGURATION
+ * SUPABASE CONFIGURATION
  * ---------------------------------------------------------
  */
 
-$cloud_name = getenv("CLOUDINARY_CLOUD_NAME");
-$api_key = getenv("CLOUDINARY_API_KEY");
-$api_secret = getenv("CLOUDINARY_API_SECRET");
+$supabase_url = rtrim(
+    getenv("SUPABASE_URL") ?: "",
+    "/"
+);
 
-if (!$cloud_name || !$api_key || !$api_secret) {
-    error_log("Cloudinary configuration is incomplete.");
+$supabase_key = getenv("SUPABASE_SECRET_KEY") ?: "";
+
+$bucket = "product-images";
+
+if ($supabase_url === "" || $supabase_key === "") {
+    error_log("Supabase Storage configuration is incomplete.");
 
     http_response_code(500);
     echo json_encode([
         "success" => false,
-        "message" => "Cloudinary is not configured."
+        "message" => "Image storage is not configured."
     ]);
     exit;
 }
@@ -218,77 +218,94 @@ if (!function_exists("curl_init")) {
 
 /*
  * ---------------------------------------------------------
- * UPLOAD IMAGE TO CLOUDINARY
+ * UPLOAD IMAGE TO SUPABASE STORAGE
  * ---------------------------------------------------------
  */
 
-$random_name = bin2hex(random_bytes(8));
+try {
+    $random_name = bin2hex(random_bytes(12));
+} catch (Throwable $e) {
+    error_log("Failed to generate a unique image filename.");
 
-$public_id = "product_" . $product_id . "_" . $random_name;
-$timestamp = time();
-$folder = "kohicebu/products";
-
-$signature_parameters = [
-    "folder" => $folder,
-    "public_id" => $public_id,
-    "timestamp" => $timestamp
-];
-
-ksort($signature_parameters);
-
-$signature_parts = [];
-
-foreach ($signature_parameters as $key => $value) {
-    $signature_parts[] = $key . "=" . $value;
+    http_response_code(500);
+    echo json_encode([
+        "success" => false,
+        "message" => "Could not prepare the image upload."
+    ]);
+    exit;
 }
 
-$signature_string = implode("&", $signature_parts);
-$signature = sha1($signature_string . $api_secret);
+$object_path = "products/"
+    . $product_id
+    . "/product_"
+    . $product_id
+    . "_"
+    . $random_name
+    . "."
+    . $extension;
 
-$upload_url = "https://api.cloudinary.com/v1_1/"
-    . rawurlencode($cloud_name)
-    . "/image/upload";
+/*
+ * Encode each path segment separately so slashes remain
+ * directory separators in the Storage API URL.
+ */
+
+$encoded_path = implode(
+    "/",
+    array_map("rawurlencode", explode("/", $object_path))
+);
+
+$encoded_bucket = rawurlencode($bucket);
+
+$upload_url = $supabase_url
+    . "/storage/v1/object/"
+    . $encoded_bucket
+    . "/"
+    . $encoded_path;
+
+$image_contents = file_get_contents($file["tmp_name"]);
+
+if ($image_contents === false) {
+    http_response_code(500);
+    echo json_encode([
+        "success" => false,
+        "message" => "Could not read the uploaded image."
+    ]);
+    exit;
+}
 
 $curl = curl_init($upload_url);
 
 curl_setopt_array($curl, [
     CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => [
-        "file" => new CURLFile(
-            $file["tmp_name"],
-            $file_mime,
-            "product." . $extension
-        ),
-        "api_key" => $api_key,
-        "timestamp" => $timestamp,
-        "folder" => $folder,
-        "public_id" => $public_id,
-        "signature" => $signature
+    CURLOPT_POSTFIELDS => $image_contents,
+    CURLOPT_HTTPHEADER => [
+        "apikey: " . $supabase_key,
+        "Authorization: Bearer " . $supabase_key,
+        "Content-Type: " . $file_mime,
+        "x-upsert: false"
     ],
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_CONNECTTIMEOUT => 15,
     CURLOPT_TIMEOUT => 60
 ]);
 
-$cloudinary_response = curl_exec($curl);
+$supabase_response = curl_exec($curl);
 $curl_error = curl_error($curl);
 $http_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
 curl_close($curl);
 
-$cloudinary_data = is_string($cloudinary_response)
-    ? json_decode($cloudinary_response, true)
+$supabase_data = is_string($supabase_response)
+    ? json_decode($supabase_response, true)
     : null;
 
 if (
-    $cloudinary_response === false ||
+    $supabase_response === false ||
     $http_status < 200 ||
-    $http_status >= 300 ||
-    empty($cloudinary_data["secure_url"]) ||
-    empty($cloudinary_data["public_id"])
+    $http_status >= 300
 ) {
     error_log(
-        "Cloudinary upload failed. HTTP status: "
+        "Supabase image upload failed. HTTP status: "
         . $http_status
         . "; error: "
         . $curl_error
@@ -302,8 +319,20 @@ if (
     exit;
 }
 
-$image_url = $cloudinary_data["secure_url"];
-$uploaded_public_id = $cloudinary_data["public_id"];
+/*
+ * ---------------------------------------------------------
+ * BUILD PUBLIC IMAGE URL
+ * ---------------------------------------------------------
+ *
+ * The bucket is public. Existing Cloudinary URLs are not
+ * modified by this upload.
+ */
+
+$image_url = $supabase_url
+    . "/storage/v1/object/public/"
+    . $encoded_bucket
+    . "/"
+    . $encoded_path;
 
 /*
  * ---------------------------------------------------------
@@ -331,42 +360,23 @@ if (
     pg_affected_rows($update_result) !== 1
 ) {
     /*
-     * Remove the newly uploaded image from Cloudinary
-     * if the database update fails.
+     * Clean up only the newly uploaded object if the
+     * database update fails. Never delete the old image.
      */
 
-    $destroy_timestamp = time();
+    $delete_url = $supabase_url
+        . "/storage/v1/object/"
+        . $encoded_bucket
+        . "/"
+        . $encoded_path;
 
-    $destroy_parameters = [
-        "public_id" => $uploaded_public_id,
-        "timestamp" => $destroy_timestamp
-    ];
-
-    ksort($destroy_parameters);
-
-    $destroy_parts = [];
-
-    foreach ($destroy_parameters as $key => $value) {
-        $destroy_parts[] = $key . "=" . $value;
-    }
-
-    $destroy_signature = sha1(
-        implode("&", $destroy_parts) . $api_secret
-    );
-
-    $destroy_url = "https://api.cloudinary.com/v1_1/"
-        . rawurlencode($cloud_name)
-        . "/image/destroy";
-
-    $cleanup = curl_init($destroy_url);
+    $cleanup = curl_init($delete_url);
 
     curl_setopt_array($cleanup, [
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => [
-            "public_id" => $uploaded_public_id,
-            "api_key" => $api_key,
-            "timestamp" => $destroy_timestamp,
-            "signature" => $destroy_signature
+        CURLOPT_CUSTOMREQUEST => "DELETE",
+        CURLOPT_HTTPHEADER => [
+            "apikey: " . $supabase_key,
+            "Authorization: Bearer " . $supabase_key
         ],
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_CONNECTTIMEOUT => 10,
@@ -374,19 +384,28 @@ if (
     ]);
 
     $cleanup_response = curl_exec($cleanup);
+    $cleanup_status = curl_getinfo(
+        $cleanup,
+        CURLINFO_HTTP_CODE
+    );
 
-    if ($cleanup_response === false) {
+    if (
+        $cleanup_response === false ||
+        $cleanup_status < 200 ||
+        $cleanup_status >= 300
+    ) {
         error_log(
-            "Cloudinary cleanup request failed: "
-            . curl_error($cleanup)
+            "Supabase cleanup failed after database update failure. "
+            . "HTTP status: "
+            . $cleanup_status
         );
     }
 
     curl_close($cleanup);
 
     error_log(
-        "Product image uploaded to Cloudinary, but the Neon "
-        . "database update failed for product ID "
+        "Supabase image uploaded, but Neon database update failed "
+        . "for product ID "
         . $product_id
         . "."
     );
@@ -418,7 +437,8 @@ logAudit(
         "product_name" => $product["product_name"],
         "previous_image_url" => $previous_image_url,
         "new_image_url" => $image_url,
-        "cloudinary_public_id" => $uploaded_public_id,
+        "storage_bucket" => $bucket,
+        "storage_object_path" => $object_path,
         "mime_type" => $file_mime,
         "file_extension" => $extension,
         "file_size" => (int) $file["size"]
