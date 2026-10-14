@@ -168,10 +168,21 @@ if (!isset($_FILES["image"]) || !is_array($_FILES["image"])) {
 $file = $_FILES["image"];
 
 if ($file["error"] !== UPLOAD_ERR_OK) {
+    $upload_error_messages = [
+        UPLOAD_ERR_INI_SIZE => "Image exceeds the server upload limit. Choose an image no larger than 5 MB.",
+        UPLOAD_ERR_FORM_SIZE => "Image exceeds the form upload limit.",
+        UPLOAD_ERR_PARTIAL => "Image upload was interrupted. Please try again.",
+        UPLOAD_ERR_NO_FILE => "No image file was received.",
+        UPLOAD_ERR_NO_TMP_DIR => "The server is missing its temporary upload folder.",
+        UPLOAD_ERR_CANT_WRITE => "The server could not save the uploaded image temporarily.",
+        UPLOAD_ERR_EXTENSION => "A server extension stopped the image upload."
+    ];
+
     http_response_code(400);
     echo json_encode([
         "success" => false,
-        "message" => "Image upload failed.",
+        "message" => $upload_error_messages[$file["error"]]
+            ?? "Image upload failed. Please try again.",
         "upload_error" => $file["error"]
     ]);
     exit;
