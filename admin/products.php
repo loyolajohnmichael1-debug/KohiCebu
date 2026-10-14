@@ -13,6 +13,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 <html lang="en">
 
 <head>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
     <meta charset="UTF-8">
 
