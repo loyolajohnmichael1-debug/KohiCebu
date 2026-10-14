@@ -2,10 +2,9 @@
 
 header("Content-Type: application/json");
 
-require_once "db.php";
-require_once "auth.php";
-require_once "audit.php";
-require_once "firebase.php";
+require_once __DIR__ . "/db.php";
+require_once __DIR__ . "/auth.php";
+require_once __DIR__ . "/audit.php";
 
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
@@ -796,6 +795,11 @@ if (
                 );
 
             if ($fcm_token !== "") {
+
+                // Firebase is optional for the order update itself. Load
+                // its credentials only when a push notification is needed;
+                // firebase.php can throw when credentials are unavailable.
+                require_once __DIR__ . "/firebase.php";
 
                 // -------------------------------------------------
                 // Build Firebase notification
