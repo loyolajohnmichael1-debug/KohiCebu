@@ -560,13 +560,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                                 Category
                             </label>
 
-                            <input
-                                type="text"
-                                id="productCategory"
-                                maxlength="100"
-                                placeholder="e.g. Coffee"
-                                autocomplete="off"
-                            >
+                            <select id="productCategory">
+                                <option value="">Select a category</option>
+                            </select>
 
                         </div>
 

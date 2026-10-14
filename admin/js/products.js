@@ -355,6 +355,7 @@ async function loadProducts() {
                 : [];
 
         populateCategoryFilter();
+        populateAddProductCategories();
 
         updateSummary();
 
@@ -498,6 +499,46 @@ function populateCategoryFilter() {
         productCategoryFilter.value =
             currentValue;
 
+    }
+
+}
+
+
+function populateAddProductCategories() {
+
+    const currentValue = productCategory.value;
+    const categories = new Set([
+        "Coffee",
+        "Non-Coffee",
+        "Pastries & Desserts"
+    ]);
+
+    allProducts.forEach(product => {
+        const category = String(product.category || "").trim();
+
+        if (category) {
+            categories.add(category);
+        }
+    });
+
+    productCategory.innerHTML = "";
+
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = "Select a category";
+    productCategory.appendChild(placeholder);
+
+    [...categories]
+        .sort((a, b) => a.localeCompare(b))
+        .forEach(category => {
+            const option = document.createElement("option");
+            option.value = category;
+            option.textContent = category;
+            productCategory.appendChild(option);
+        });
+
+    if (categories.has(currentValue)) {
+        productCategory.value = currentValue;
     }
 
 }
