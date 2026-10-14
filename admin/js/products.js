@@ -2861,22 +2861,22 @@ async function uploadProductImage(
         );
 
 
+    const responseText = await response.text();
     let data = null;
 
-
     try {
-
-        data =
-            await response.json();
-
-    }
-
-    catch (error) {
+        data = JSON.parse(responseText);
+    } catch (error) {
+        console.error("Image upload returned a non-JSON response.", {
+            status: response.status,
+            statusText: response.statusText,
+            contentType: response.headers.get("content-type"),
+            body: responseText.slice(0, 2000)
+        });
 
         throw new Error(
-            "The image upload returned an invalid response."
+            `The image server returned an unreadable response (HTTP ${response.status}). Check the browser console and server logs.`
         );
-
     }
 
 

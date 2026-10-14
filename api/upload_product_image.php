@@ -3,6 +3,65 @@
 
 header("Content-Type: application/json; charset=UTF-8");
 
+// Keep PHP notices, warnings, and fatal errors from corrupting the JSON
+// response expected by the admin upload flow.
+ini_set("display_errors", "0");
+ob_start();
+
+set_exception_handler(function (Throwable $exception) {
+    error_log(
+        "Product image upload exception: " .
+        $exception->getMessage()
+    );
+
+    while (ob_get_level() > 0) {
+        ob_end_clean();
+    }
+
+    if (!headers_sent()) {
+        http_response_code(500);
+        header("Content-Type: application/json; charset=UTF-8");
+    }
+
+    echo json_encode([
+        "success" => false,
+        "message" => "The image upload could not be completed. Check the server error log."
+    ]);
+    exit;
+});
+
+register_shutdown_function(function () {
+    $error = error_get_last();
+    $fatalTypes = [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR];
+
+    if (!$error || !in_array($error["type"], $fatalTypes, true)) {
+        return;
+    }
+
+    error_log(
+        "Product image upload fatal error: " .
+        $error["message"] .
+        " in " .
+        $error["file"] .
+        ":" .
+        $error["line"]
+    );
+
+    while (ob_get_level() > 0) {
+        ob_end_clean();
+    }
+
+    if (!headers_sent()) {
+        http_response_code(500);
+        header("Content-Type: application/json; charset=UTF-8");
+    }
+
+    echo json_encode([
+        "success" => false,
+        "message" => "The image upload stopped because of a server error. Check the server error log."
+    ]);
+});
+
 require_once __DIR__ . "/db.php";
 require_once __DIR__ . "/auth.php";
 require_once __DIR__ . "/audit.php";
