@@ -200,9 +200,7 @@ function buildCategories(products) {
              * "PASTRIES & DESSERTS"
              */
             const categoryKey =
-                rawCategory
-                    .replace(/\s+/g, " ")
-                    .toUpperCase();
+                normalizeCategoryKey(rawCategory);
 
 
             if (!categoryMap.has(categoryKey)) {
@@ -216,6 +214,12 @@ function buildCategories(products) {
 
         }
     );
+
+    // Keep this filter available even when there are currently no
+    // non-coffee products in the catalog.
+    if (!categoryMap.has("NONCOFFEE")) {
+        categoryMap.set("NONCOFFEE", "Non-Coffee");
+    }
 
 
     const categories =
@@ -376,16 +380,9 @@ function renderMenu() {
             allProducts.filter(
                 function (product) {
 
-                    return String(
+                    return normalizeCategoryKey(
                         product.category || ""
-                    )
-                        .trim()
-                        .toUpperCase() ===
-                    String(
-                        activeCategory
-                    )
-                        .trim()
-                        .toUpperCase();
+                    ) === normalizeCategoryKey(activeCategory);
 
                 }
             );
@@ -648,6 +645,10 @@ function formatCategoryName(
     }
 
 
+    if (normalizeCategoryKey(category) === "NONCOFFEE") {
+        return "Non-Coffee";
+    }
+
     return String(category)
         .replace(/[_-]+/g, " ")
         .toLowerCase()
@@ -659,6 +660,16 @@ function formatCategoryName(
 
             }
         );
+
+}
+
+
+function normalizeCategoryKey(category) {
+
+    return String(category || "")
+        .trim()
+        .replace(/[\s_-]+/g, "")
+        .toUpperCase();
 
 }
 
