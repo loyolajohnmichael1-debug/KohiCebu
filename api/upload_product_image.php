@@ -3,9 +3,9 @@
 
 header("Content-Type: application/json; charset=UTF-8");
 
-require_once "db.php";
-require_once "auth.php";
-require_once "audit.php";
+require_once __DIR__ . "/db.php";
+require_once __DIR__ . "/auth.php";
+require_once __DIR__ . "/audit.php";
 
 /*
  * ---------------------------------------------------------
@@ -273,17 +273,25 @@ if ($image_contents === false) {
     exit;
 }
 
+$supabase_headers = [
+    "apikey: " . $supabase_key,
+    "Content-Type: " . $file_mime,
+    "x-upsert: false"
+];
+
+// Current Supabase secret keys (sb_secret_...) are API keys, not JWTs.
+// Sending one as a Bearer token causes Supabase to reject it as an invalid
+// JWT. Legacy service-role keys are JWTs and still need Bearer authorization.
+if (!str_starts_with($supabase_key, "sb_secret_")) {
+    $supabase_headers[] = "Authorization: Bearer " . $supabase_key;
+}
+
 $curl = curl_init($upload_url);
 
 curl_setopt_array($curl, [
     CURLOPT_POST => true,
     CURLOPT_POSTFIELDS => $image_contents,
-    CURLOPT_HTTPHEADER => [
-        "apikey: " . $supabase_key,
-        "Authorization: Bearer " . $supabase_key,
-        "Content-Type: " . $file_mime,
-        "x-upsert: false"
-    ],
+    CURLOPT_HTTPHEADER => $supabase_headers,
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_CONNECTTIMEOUT => 15,
     CURLOPT_TIMEOUT => 60
@@ -304,10 +312,16 @@ if (
     $http_status < 200 ||
     $http_status >= 300
 ) {
+    $provider_message = is_array($supabase_data)
+        ? ($supabase_data["message"] ?? $supabase_data["error"] ?? "")
+        : "";
+
     error_log(
         "Supabase image upload failed. HTTP status: "
         . $http_status
-        . "; error: "
+        . "; message: "
+        . (is_string($provider_message) ? $provider_message : "")
+        . "; transport error: "
         . $curl_error
     );
 
@@ -315,6 +329,7 @@ if (
     echo json_encode([
         "success" => false,
         "message" => "Failed to upload image to cloud storage."
+            . ($http_status > 0 ? " (HTTP " . $http_status . ")." : "")
     ]);
     exit;
 }
@@ -374,10 +389,12 @@ if (
 
     curl_setopt_array($cleanup, [
         CURLOPT_CUSTOMREQUEST => "DELETE",
-        CURLOPT_HTTPHEADER => [
+        CURLOPT_HTTPHEADER => array_values(array_filter([
             "apikey: " . $supabase_key,
-            "Authorization: Bearer " . $supabase_key
-        ],
+            str_starts_with($supabase_key, "sb_secret_")
+                ? null
+                : "Authorization: Bearer " . $supabase_key
+        ])),
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_CONNECTTIMEOUT => 10,
         CURLOPT_TIMEOUT => 20
