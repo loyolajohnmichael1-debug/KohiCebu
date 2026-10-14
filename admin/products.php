@@ -1233,7 +1233,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
 
 <script src="js/pagination.js"></script>
-<script src="js/products.js?v=4"></script>
+<script src="js/products.js?v=5"></script>
 
 </body>
 

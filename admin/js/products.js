@@ -2874,8 +2874,12 @@ async function uploadProductImage(
             body: responseText.slice(0, 2000)
         });
 
+        const responsePreview = responseText
+            .replace(/\s+/g, " ")
+            .slice(0, 220);
+
         throw new Error(
-            `The image server returned an unreadable response (HTTP ${response.status}). Check the browser console and server logs.`
+            `The image server returned an unreadable response (HTTP ${response.status}, ${response.headers.get("content-type") || "unknown content type"}). Response: ${responsePreview || "(empty)"}`
         );
     }
 
