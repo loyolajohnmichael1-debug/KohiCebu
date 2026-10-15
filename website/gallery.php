@@ -7,7 +7,7 @@ require_once 'includes/header.php';
 ?>
 
 <!-- Gallery Page Styles -->
-<link rel="stylesheet" href="css/gallery.css">
+<link rel="stylesheet" href="css/gallery.css?v=2">
 
 <main class="gallery-page">
 
@@ -127,7 +127,7 @@ require_once 'includes/header.php';
 
                     <div class="gallery-card__image">
                         <img
-                            src="assets/images/gallery/storefront-window.jpg"
+                            src="assets/images/gallery/storefront-exterior.jpg"
                             alt="KohiCebu storefront and café space"
                         >
                     </div>
@@ -193,7 +193,7 @@ require_once 'includes/header.php';
                 <div class="gallery-all__item">
                     <div class="gallery-placeholder">
                         <img
-                            src="assets/images/gallery/storefront-sign.jpg"
+                            src="assets/images/gallery/storefront-exterior.jpg"
                             alt="KohiCebu coffee shop storefront sign"
                         >
                     </div>

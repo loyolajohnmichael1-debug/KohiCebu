@@ -21,6 +21,7 @@ require_once __DIR__ . '/includes/header.php';
                 <img class="hero__slide" src="assets/images/hero-coffee-matcha.jpg" alt="Iced coffee and matcha served at KohiCebu" loading="lazy" decoding="async">
                 <img class="hero__slide" src="assets/images/hero-crookie.jpg" alt="Freshly baked crookies with chocolate chip cookie dough" loading="lazy" decoding="async">
                 <img class="hero__slide" src="assets/images/hero-latte.jpg" alt="KohiCebu iced latte in a cozy cafe setting" loading="lazy" decoding="async">
+                <img class="hero__slide" src="assets/images/hero-test-drinks.png" alt="Three KohiCebu iced coffee, chocolate, and matcha drinks" loading="lazy" decoding="async">
             </div>
         </div>
 
@@ -85,6 +86,7 @@ require_once __DIR__ . '/includes/header.php';
                 <button type="button" data-carousel-slide="1" aria-label="Show image 2"></button>
                 <button type="button" data-carousel-slide="2" aria-label="Show image 3"></button>
                 <button type="button" data-carousel-slide="3" aria-label="Show image 4"></button>
+                <button type="button" data-carousel-slide="4" aria-label="Show image 5"></button>
             </div>
             <button class="hero__carousel-arrow" type="button" data-carousel-next aria-label="Next image">›</button>
         </div>
@@ -696,7 +698,7 @@ require_once __DIR__ . '/includes/header.php';
 
 </main>
 
-<script src="js/home-carousel.js?v=2" defer></script>
+<script src="js/home-carousel.js?v=3" defer></script>
 
 
 
