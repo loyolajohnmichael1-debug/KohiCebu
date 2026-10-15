@@ -173,6 +173,15 @@ const productDetailsSubtitle =
 const productDetailsBody =
     document.getElementById("productDetailsBody");
 
+const editPriceModal = document.getElementById("editPriceModal");
+const editPriceProductName = document.getElementById("editPriceProductName");
+const editProductPriceInput = document.getElementById("editProductPriceInput");
+const editPriceError = document.getElementById("editPriceError");
+const closeEditPriceModalButton = document.getElementById("closeEditPriceModal");
+const cancelEditPriceButton = document.getElementById("cancelEditPrice");
+const saveEditPriceButton = document.getElementById("saveEditPrice");
+let selectedProductForPrice = null;
+
 
 // Recipe Configuration Modal
 const recipeModal =
@@ -1097,39 +1106,60 @@ function renderProducts(products) {
 }
 
 
-async function editProductPrice(product) {
+function editProductPrice(product) {
+    selectedProductForPrice = product;
+    editPriceProductName.textContent = product.product_name;
+    editProductPriceInput.value = Number(product.price).toFixed(2);
+    editPriceError.hidden = true;
+    editPriceError.textContent = "";
+    editPriceModal.hidden = false;
+    document.body.classList.add("modal-open");
+    editProductPriceInput.focus();
+    editProductPriceInput.select();
+}
 
-    const enteredPrice = window.prompt(
-        `Enter the new price for ${product.product_name} (PHP):`,
-        Number(product.price).toFixed(2)
-    );
+function closeEditPriceModalWindow() {
+    editPriceModal.hidden = true;
+    editPriceError.hidden = true;
+    selectedProductForPrice = null;
+    document.body.classList.remove("modal-open");
+}
 
-    if (enteredPrice === null) {
-        return;
-    }
+async function saveEditedProductPrice() {
+    if (!selectedProductForPrice || saveEditPriceButton.disabled) return;
 
-    const price = Number(enteredPrice.trim());
-
+    const price = Number(editProductPriceInput.value);
     if (!Number.isFinite(price) || price <= 0 || price > 99999999.99) {
-        window.alert("Enter a valid price greater than ₱0.00.");
+        editPriceError.textContent = "Enter a valid price greater than zero.";
+        editPriceError.hidden = false;
+        editProductPriceInput.focus();
         return;
     }
+
+    saveEditPriceButton.disabled = true;
+    saveEditPriceButton.textContent = "SAVING...";
+    editPriceError.hidden = true;
 
     try {
         await apiRequest("update_product_price.php", {
             method: "POST",
             body: JSON.stringify({
-                product_id: product.product_id,
+                product_id: selectedProductForPrice.product_id,
                 price
             })
         });
 
+        const productName = selectedProductForPrice.product_name;
+        closeEditPriceModalWindow();
         await loadProducts();
-        setSystemStatus(`Price updated for ${product.product_name}.`);
+        setSystemStatus("Price updated for " + productName + ".");
     } catch (error) {
-        window.alert(error.message || "Unable to update product price.");
+        editPriceError.textContent = error.message || "Unable to update product price.";
+        editPriceError.hidden = false;
+    } finally {
+        saveEditPriceButton.disabled = false;
+        saveEditPriceButton.textContent = "SAVE PRICE";
     }
-
 }
 
 
@@ -3261,6 +3291,30 @@ productDetailsModal.addEventListener(
    RECIPE MODAL EVENTS
    ========================================================= */
 
+closeEditPriceModalButton.addEventListener(
+    "click",
+    closeEditPriceModalWindow
+);
+
+cancelEditPriceButton.addEventListener(
+    "click",
+    closeEditPriceModalWindow
+);
+
+saveEditPriceButton.addEventListener(
+    "click",
+    saveEditedProductPrice
+);
+
+editPriceModal.addEventListener(
+    "click",
+    function (event) {
+        if (event.target === editPriceModal) {
+            closeEditPriceModalWindow();
+        }
+    }
+);
+
 addRecipeIngredientButton.addEventListener(
     "click",
     startAddRecipeIngredient
@@ -3398,6 +3452,11 @@ document.addEventListener(
 
                 return;
 
+        }
+
+        if (editPriceModal && !editPriceModal.hidden) {
+            closeEditPriceModalWindow();
+            return;
         }
 
 

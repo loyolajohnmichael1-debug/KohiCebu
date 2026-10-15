@@ -41,7 +41,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
     <link
         rel="stylesheet"
-        href="css/products.css?v=6"
+        href="css/products.css?v=7"
     >
     <link rel="stylesheet" href="css/pagination.css">
 
@@ -1106,6 +1106,40 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
 
         <!-- =================================================
+             EDIT PRODUCT PRICE MODAL
+             ================================================= -->
+
+        <div class="modal-overlay" id="editPriceModal" hidden>
+            <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="editPriceTitle">
+                <div class="modal-header">
+                    <div>
+                        <div class="modal-eyebrow">PRODUCT MANAGEMENT</div>
+                        <h2 id="editPriceTitle">Edit Product Price</h2>
+                        <p id="editPriceProductName">Update the selling price.</p>
+                    </div>
+                    <button type="button" class="modal-close" id="closeEditPriceModal" aria-label="Close">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editProductPriceInput">New Price</label>
+                        <div class="price-input-wrapper">
+                            <span class="price-prefix">&#8369;</span>
+                            <input type="number" id="editProductPriceInput" min="0.01" max="99999999.99" step="0.01" inputmode="decimal" required>
+                        </div>
+                    </div>
+                    <div class="modal-message error" id="editPriceError" role="alert" hidden></div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="secondary-button" id="cancelEditPrice">CANCEL</button>
+                    <button type="button" class="primary-button" id="saveEditPrice">SAVE PRICE</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- =================================================
      DELETE PRODUCT CONFIRMATION MODAL
      ================================================= -->
 
@@ -1233,7 +1267,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
 
 <script src="js/pagination.js"></script>
-<script src="js/products.js?v=5"></script>
+<script src="js/products.js?v=6"></script>
 
 </body>
 
