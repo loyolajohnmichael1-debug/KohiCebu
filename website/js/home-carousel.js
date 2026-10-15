@@ -29,9 +29,7 @@
     function stopTimer() { window.clearInterval(timer); }
     function startTimer() {
         stopTimer();
-        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-            timer = window.setInterval(() => showSlide(activeIndex + 1), 4000);
-        }
+        timer = window.setInterval(() => showSlide(activeIndex + 1), 4000);
     }
 
     previous.addEventListener("click", () => { showSlide(activeIndex - 1); startTimer(); });

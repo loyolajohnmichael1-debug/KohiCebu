@@ -696,7 +696,7 @@ require_once __DIR__ . '/includes/header.php';
 
 </main>
 
-<script src="js/home-carousel.js" defer></script>
+<script src="js/home-carousel.js?v=2" defer></script>
 
 
 
