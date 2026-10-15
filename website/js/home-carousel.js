@@ -30,7 +30,7 @@
     function startTimer() {
         stopTimer();
         if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-            timer = window.setInterval(() => showSlide(activeIndex + 1), 6000);
+            timer = window.setInterval(() => showSlide(activeIndex + 1), 4000);
         }
     }
 
@@ -41,8 +41,6 @@
         startTimer();
     }));
 
-    hero.addEventListener("mouseenter", stopTimer);
-    hero.addEventListener("mouseleave", startTimer);
     hero.addEventListener("focusin", stopTimer);
     hero.addEventListener("focusout", (event) => {
         if (!hero.contains(event.relatedTarget)) startTimer();
