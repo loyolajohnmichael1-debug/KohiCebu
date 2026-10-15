@@ -100,6 +100,15 @@ $dateTo =
         ? trim($_GET["date_to"])
         : "";
 
+$page = filter_var($_GET["page"] ?? 1, FILTER_VALIDATE_INT, ["options" => ["min_range" => 1]]);
+if ($page === false) {
+    http_response_code(400);
+    echo json_encode(["success" => false, "message" => "Invalid page. Use a positive integer."]);
+    exit;
+}
+$pageSize = 10;
+$offset = ($page - 1) * $pageSize;
+
 
 /*
  * =========================================================
@@ -259,6 +268,19 @@ if (
  * =========================================================
  */
 
+$countQuery = "
+    SELECT COUNT(*) AS total
+    FROM audit_logs a
+    $where
+";
+$countResult = pg_query_params($conn, $countQuery, $params);
+if (!$countResult) {
+    http_response_code(500);
+    echo json_encode(["success" => false, "message" => "Unable to count audit logs."]);
+    exit;
+}
+$total = (int) pg_fetch_result($countResult, 0, "total");
+
 $query = "
 
     SELECT
@@ -306,7 +328,8 @@ $query = "
         a.created_at DESC,
         a.audit_id DESC
 
-    LIMIT 100
+    LIMIT $" . (count($params) + 1) . "
+    OFFSET $" . (count($params) + 2) . "
 
 ";
 
@@ -317,11 +340,12 @@ $query = "
  * =========================================================
  */
 
+$queryParams = array_merge($params, [$pageSize, $offset]);
 $result =
     pg_query_params(
         $conn,
         $query,
-        $params
+        $queryParams
     );
 
 
@@ -469,7 +493,11 @@ echo json_encode([
     ],
 
     "count" =>
-        count($logs),
+        $total,
+
+    "page" => $page,
+    "page_size" => $pageSize,
+    "total_pages" => max(1, (int) ceil($total / $pageSize)),
 
     "logs" =>
         $logs

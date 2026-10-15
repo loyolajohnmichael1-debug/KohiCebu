@@ -39,6 +39,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         rel="stylesheet"
         href="css/audit_logs.css"
     >
+    <link rel="stylesheet" href="css/pagination.css">
 
 </head>
 
@@ -267,6 +268,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         </section>
 
 
+        <nav class="admin-pagination" id="auditLogsPagination" aria-label="Audit log pages" hidden></nav>
     </main>
 
 </div>
@@ -276,6 +278,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
      AUDIT LOGS JAVASCRIPT
 ========================================================= -->
 
+<script src="js/pagination.js"></script>
 <script
     src="js/audit_logs.js"
 ></script>

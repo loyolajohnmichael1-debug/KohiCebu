@@ -21,6 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const dateToInput =
         document.getElementById("dateTo");
 
+    const pagination = document.getElementById("auditLogsPagination");
+    let currentPage = 1;
+
 
     /*
      * ---------------------------------------------------------
@@ -226,6 +229,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+        params.set("page", String(currentPage));
+
 
         const queryString =
             params.toString();
@@ -281,9 +286,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     ? data.logs
                     : [];
 
-
-            auditLogCount.textContent =
-                logs.length;
+            const total = Number(data.count) || 0;
+            auditLogCount.textContent = String(total);
+            window.AdminPagination.render(pagination, total, currentPage, (page) => {
+                currentPage = page;
+                loadAuditLogs();
+            });
 
 
             if (
@@ -484,6 +492,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
+            currentPage = 1;
             loadAuditLogs();
 
         }
@@ -503,6 +512,8 @@ document.addEventListener("DOMContentLoaded", () => {
             dateFromInput.value = "";
             dateToInput.value = "";
 
+            currentPage = 1;
+
             loadAuditLogs();
 
         }
@@ -519,6 +530,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "click",
         () => {
 
+            currentPage = 1;
             loadAuditLogs();
 
         }
