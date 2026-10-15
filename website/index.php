@@ -15,15 +15,13 @@ require_once __DIR__ . '/includes/header.php';
 
     <section class="hero" aria-labelledby="homeHeroTitle">
 
-        <div class="hero__image">
-
-            <img
-                src="assets/images/hero.jpg"
-                alt="KohiCebu flat white with a warm latte-art design"
-                fetchpriority="high"
-                decoding="async"
-            >
-
+        <div class="hero__image" aria-label="Featured KohiCebu drinks and treats">
+            <div class="hero__slides">
+                <img class="hero__slide is-active" src="assets/images/hero-matcha.jpg" alt="KohiCebu matcha drinks and pastries" fetchpriority="high" decoding="async">
+                <img class="hero__slide" src="assets/images/hero-coffee-matcha.jpg" alt="Iced coffee and matcha served at KohiCebu" loading="lazy" decoding="async">
+                <img class="hero__slide" src="assets/images/hero-crookie.jpg" alt="Freshly baked crookies with chocolate chip cookie dough" loading="lazy" decoding="async">
+                <img class="hero__slide" src="assets/images/hero-latte.jpg" alt="KohiCebu iced latte in a cozy cafe setting" loading="lazy" decoding="async">
+            </div>
         </div>
 
 
@@ -78,6 +76,17 @@ require_once __DIR__ . '/includes/header.php';
 
         <div class="hero__scroll">
             Scroll to explore
+        </div>
+
+        <div class="hero__carousel-controls" aria-label="Hero image carousel controls">
+            <button class="hero__carousel-arrow" type="button" data-carousel-prev aria-label="Previous image">‹</button>
+            <div class="hero__carousel-dots" role="group" aria-label="Choose a hero image">
+                <button type="button" class="is-active" data-carousel-slide="0" aria-label="Show image 1" aria-current="true"></button>
+                <button type="button" data-carousel-slide="1" aria-label="Show image 2"></button>
+                <button type="button" data-carousel-slide="2" aria-label="Show image 3"></button>
+                <button type="button" data-carousel-slide="3" aria-label="Show image 4"></button>
+            </div>
+            <button class="hero__carousel-arrow" type="button" data-carousel-next aria-label="Next image">›</button>
         </div>
 
     </section>
@@ -686,6 +695,8 @@ require_once __DIR__ . '/includes/header.php';
     </section>
 
 </main>
+
+<script src="js/home-carousel.js" defer></script>
 
 
 

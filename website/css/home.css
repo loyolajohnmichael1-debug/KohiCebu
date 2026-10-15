@@ -57,6 +57,74 @@
     object-position: center;
 }
 
+.hero__slides,
+.hero__slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hero__slide {
+    object-fit: cover;
+    object-position: center;
+    opacity: 0;
+    transition: opacity 800ms ease;
+}
+
+.hero__slide.is-active { opacity: 1; }
+
+.hero__carousel-controls {
+    position: absolute;
+    z-index: 3;
+    left: max(24px, calc((100% - var(--container-width)) / 2));
+    bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.hero__carousel-arrow,
+.hero__carousel-dots button {
+    display: grid;
+    place-items: center;
+    color: var(--white);
+    background: rgba(0, 0, 0, .28);
+    border: 1px solid rgba(255, 255, 255, .55);
+    cursor: pointer;
+}
+
+.hero__carousel-arrow {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 24px;
+    line-height: 1;
+}
+
+.hero__carousel-dots { display: flex; gap: 8px; }
+
+.hero__carousel-dots button {
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    border-radius: 50%;
+}
+
+.hero__carousel-dots button.is-active { background: var(--white); }
+
+.hero__carousel-arrow:focus-visible,
+.hero__carousel-dots button:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
+
+@media (max-width: 600px) {
+    .hero__carousel-controls { left: 20px; bottom: 22px; }
+    .hero__scroll { right: 20px; bottom: 26px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero__slide { transition: none; }
+}
+
 .hero__overlay {
     position: absolute;
 
