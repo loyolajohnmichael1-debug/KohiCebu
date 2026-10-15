@@ -463,7 +463,11 @@ $currentPage = basename($_SERVER['PHP_SELF']);
        CONFIRM LOGOUT
     ===================================================== */
 
-    function confirmLogout() {
+    async function confirmLogout() {
+
+        if (confirmButton.disabled) {
+            return;
+        }
 
         confirmButton.disabled = true;
 
@@ -473,18 +477,24 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             "Signing Out...";
 
 
-        sessionStorage.clear();
+        const token = sessionStorage.getItem("token");
 
-
-        setTimeout(
-            function () {
-
-                window.location.href =
-                    "logout.php";
-
-            },
-            180
-        );
+        try {
+            if (token) {
+                await fetch("../api/logout.php", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Accept": "application/json"
+                    }
+                });
+            }
+        } catch (error) {
+            console.error("Staff logout request failed:", error);
+        } finally {
+            sessionStorage.clear();
+            window.location.replace("login.php");
+        }
 
     }
 

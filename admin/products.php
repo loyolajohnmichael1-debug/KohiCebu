@@ -41,7 +41,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
     <link
         rel="stylesheet"
-        href="css/products.css"
+        href="css/products.css?v=6"
     >
     <link rel="stylesheet" href="css/pagination.css">
 
